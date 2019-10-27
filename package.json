@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "format": "prettier --write \"**/*.{js,ts,vue,css,md}\" && npm run lint"
   },
   "husky": {
     "hooks": {
@@ -15,7 +16,7 @@
   "lint-staged": {
     "*.{ts,vue,js}": [
       "prettier --write",
-      "npm run lint",
+      "vue-cli-service lint",
       "git add"
     ],
     "*.{css,md}": [
