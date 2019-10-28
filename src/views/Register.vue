@@ -15,11 +15,7 @@
       <el-input v-model="ruleForm.email" placeholder="请输入邮箱"></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="password">
-      <el-input
-        v-model="ruleForm.password"
-        show-password
-        placeholder="请输入密码"
-      ></el-input>
+      <el-input v-model="ruleForm.password" show-password placeholder="请输入密码"></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="passwordValidate">
       <el-input
@@ -35,45 +31,45 @@
   </el-form>
 </template>
 
-<script>
-export default {
-  name: 'Register',
-  data() {
-    return {
-      ruleForm: {
-        username: '',
-        email: '',
-        password: '',
-        passwordValidate: '',
-      },
-      rules: {
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-        ],
-        email: [{ required: true, message: '请输入正确邮箱', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-        passwordValidate: [
-          { required: true, message: '请再次输入密码', trigger: 'blur' },
-        ],
-      },
-    };
-  },
-  methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-  },
-};
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import { Form as ElForm } from 'element-ui';
+
+@Component
+export default class Register extends Vue {
+  private ruleForm: {
+    username: string;
+    email: string;
+    password: string;
+    passwordValidate: string;
+  } = {
+    username: '',
+    email: '',
+    password: '',
+    passwordValidate: '',
+  };
+  private rules: any = {
+    username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+    email: [{ required: true, message: '请输入正确邮箱', trigger: 'blur' }],
+    password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+    passwordValidate: [{ required: true, message: '请再次输入密码', trigger: 'blur' }],
+  };
+
+  public submitForm(formName: string) {
+    (this.$refs[formName] as ElForm).validate((isValid: boolean) => {
+      if (isValid) {
+        alert('submit!');
+      } else {
+        console.log('error submit!!');
+        return false;
+      }
+    });
+  }
+
+  public resetForm(formName: string) {
+    (this.$refs[formName] as ElForm).resetFields();
+  }
+}
 </script>
 
 <style scoped lang="stylus">
