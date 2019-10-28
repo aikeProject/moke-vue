@@ -50,7 +50,7 @@ export default class Register extends Vue {
   };
   private rules: object = {
     username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-    email: [{ required: true, message: '请输入正确邮箱', trigger: 'blur' }],
+    email: [{ required: true, type: 'email', message: '请输入正确邮箱', trigger: 'blur' }],
     password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
     passwordValidate: [{ required: true, message: '请再次输入密码', trigger: 'blur' }],
   };

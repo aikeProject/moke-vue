@@ -35,7 +35,7 @@ export default class Register extends Vue {
     password: '',
   };
   private rules: object = {
-    email: [{ required: true, message: '请输入正确邮箱', trigger: 'blur' }],
+    email: [{ required: true, type: 'email', message: '请输入正确邮箱', trigger: 'blur' }],
     password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
   };
 
