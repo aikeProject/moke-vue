@@ -11,6 +11,7 @@ const instance = axios.create({
 
 // instance.defaults.headers.common['Authorization'] = 'Token ';
 
+// 请求拦截器
 axios.interceptors.request.use(
   function(config: AxiosRequestConfig) {
     return config;
@@ -20,6 +21,7 @@ axios.interceptors.request.use(
   }
 );
 
+// 响应拦截器
 axios.interceptors.response.use(
   function(response: AxiosResponse) {
     return response;
