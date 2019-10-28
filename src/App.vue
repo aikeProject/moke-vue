@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <el-container>
-      <el-header>Header</el-header>
-      <el-main>Main</el-main>
-    </el-container>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -17,9 +14,12 @@ export default {
 <style lang="stylus">
 @import 'style/reset.styl';
 
-body {
+body
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+  background-image: linear-gradient(to top, rgb(251, 194, 235) 0%, rgb(166, 193, 238));
+  width 100%
+  min-height 100vh
+  font-size 14px
 </style>

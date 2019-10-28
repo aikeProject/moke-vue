@@ -7,7 +7,14 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    // 单引号
     quotes: [1, 'single'],
+    'vue/no-unused-components': [
+      'error',
+      {
+        ignoreWhenBindingPresent: false,
+      },
+    ],
     // indent: ['error', 2],
   },
   parserOptions: {
