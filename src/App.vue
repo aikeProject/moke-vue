@@ -22,4 +22,7 @@ body
   width 100%
   min-height 100vh
   font-size 14px
+
+a
+  text-decoration none
 </style>

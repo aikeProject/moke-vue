@@ -1,5 +1,16 @@
 import Vue from 'vue';
-import { Button, Container, Header, Main, Row, Col, Aside } from 'element-ui';
+import {
+  Button,
+  Container,
+  Header,
+  Main,
+  Row,
+  Col,
+  Aside,
+  Form,
+  FormItem,
+  Input,
+} from 'element-ui';
 
 Vue.use(Button);
 Vue.use(Container);
@@ -8,3 +19,6 @@ Vue.use(Main);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Aside);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
