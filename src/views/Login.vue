@@ -63,7 +63,7 @@ export default class Register extends Vue {
   padding 20px
   border-radius 4px
   box-shadow 0 2px 2px rgba(0, 0, 0, .05), 0 1px 0 rgba(0, 0, 0, .05)
-  margin 200px auto
+  margin 0 auto
 
 .register-link
   margin-left 130px
