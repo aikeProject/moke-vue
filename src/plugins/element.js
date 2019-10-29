@@ -15,6 +15,7 @@ import {
   MessageBox,
   Notification,
   Message,
+  Avatar,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -28,6 +29,7 @@ Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Input);
 Vue.use(Link);
+Vue.use(Avatar);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;
