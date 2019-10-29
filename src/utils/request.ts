@@ -9,11 +9,13 @@ const instance = axios.create({
   baseURL: 'http://localhost:8000',
 });
 
-// instance.defaults.headers.common['Authorization'] = 'Token ';
-
 // 请求拦截器
-axios.interceptors.request.use(
+instance.interceptors.request.use(
   function(config: AxiosRequestConfig) {
+    const Token = localStorage.getItem('Token');
+
+    if (Token) config.headers['Authorization'] = `Token ${Token}`;
+
     return config;
   },
   function(error: AxiosError) {
@@ -22,7 +24,7 @@ axios.interceptors.request.use(
 );
 
 // 响应拦截器
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   function(response: AxiosResponse) {
     return response;
   },

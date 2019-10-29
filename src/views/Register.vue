@@ -36,8 +36,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
 import { Form as ElForm } from 'element-ui';
-import { RegisterApi } from '../common/Api';
 
 @Component
 export default class Register extends Vue {
@@ -59,16 +59,15 @@ export default class Register extends Vue {
     passwordValidate: [{ required: true, message: '请再次输入密码', trigger: 'blur' }],
   };
 
+  @Action('register') register: Function;
+
   public submitForm(formName: string) {
     (this.$refs[formName] as ElForm).validate((isValid: boolean) => {
       if (isValid) {
-        const {
-          ruleForm: { username, email, password },
-        } = this;
+        const { ruleForm } = this;
 
-        RegisterApi({ username, email, password }).then((data: any) => {
-          console.log('-- data --');
-          console.log(data);
+        this.register(ruleForm).then(() => {
+          this.$router.push('/');
         });
       } else {
         return false;

@@ -22,14 +22,23 @@
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 import Header from '@/components/Header.vue';
+import { InterfaceUserInfo } from '../common/Interface';
 
 @Component({
   components: {
     Header,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  @State('userInfo') userInfo;
+
+  created() {
+    console.log('-- userInfo --');
+    console.log(this.userInfo);
+  }
+}
 </script>
 
 <style scoped lang="stylus">

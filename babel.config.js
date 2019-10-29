@@ -8,5 +8,7 @@ module.exports = {
         styleLibraryName: '~theme',
       },
     ],
+    ['@babel/plugin-proposal-decorators', { legacy: true }],
+    ['@babel/plugin-proposal-class-properties', { loose: true }],
   ],
 };

@@ -1,11 +1,55 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { ActionContext } from 'vuex';
+import { State, Mutations } from './interface';
+import { RegisterApi, LoginApi, UserInfo } from '@/common/Api';
+import { InterfaceRegister, InterfaceLogin, InterfaceUserInfo } from '@/common/Interface';
 
 Vue.use(Vuex);
 
+const state: State = {
+  userInfo: {
+    username: '',
+    email: '',
+    image: '',
+  },
+};
+
+const getters = {};
+
+const mutations = {
+  [Mutations.SET_USER](state: State, data: InterfaceUserInfo) {
+    state.userInfo = data;
+  },
+};
+
+const actions = {
+  async register({ commit, dispatch }: ActionContext<State, State>, request: InterfaceRegister) {
+    const { data } = await RegisterApi(request);
+    if (data.token) {
+      localStorage.setItem('Token', data.token);
+      await dispatch('userInfo');
+    }
+  },
+  async login({ commit, dispatch }: ActionContext<State, State>, request: InterfaceLogin) {
+    const { data } = await LoginApi(request);
+    if (data.token) {
+      localStorage.setItem('Token', data.token);
+      await dispatch('userInfo');
+    }
+  },
+  async userInfo({ commit }: ActionContext<State, State>) {
+    const { data } = await UserInfo();
+
+    if (data) commit(Mutations.SET_USER, data);
+  },
+};
+
+const modules = {};
+
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+  state,
+  getters,
+  mutations,
+  actions,
+  modules,
 });

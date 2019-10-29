@@ -5,11 +5,25 @@
  */
 
 import request from '../utils/request';
-import { InterfaceRegister } from './Interface';
+import {
+  InterfaceRegister,
+  InterfaceRegisterResponse,
+  InterfaceLogin,
+  InterfaceUserInfo,
+} from './Interface';
 import { AxiosRequestConfig } from 'axios';
 
 const BASE = 'api';
 
+// 注册
 export const RegisterApi = (data: InterfaceRegister, config?: AxiosRequestConfig) => {
-  return request.post(`${BASE}/user/`, data, config);
+  return request.post<InterfaceRegisterResponse>(`${BASE}/user/`, data, config);
 };
+
+// 登录
+export const LoginApi = (data: InterfaceLogin, config?: AxiosRequestConfig) => {
+  return request.post<{ token: string }>('login/', data, config);
+};
+
+// 查看当前登录用户信息
+export const UserInfo = () => request.get<InterfaceUserInfo>(`${BASE}/user/1/`);
