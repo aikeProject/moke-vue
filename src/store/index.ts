@@ -27,7 +27,7 @@ const actions = {
     const { data } = await RegisterApi(request);
     if (data.token) {
       localStorage.setItem('Token', data.token);
-      await dispatch('userInfo');
+      await dispatch('userInfo', data);
     }
   },
   async login({ commit, dispatch }: ActionContext<State, State>, request: InterfaceLogin) {
