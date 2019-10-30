@@ -16,6 +16,9 @@ import {
   Notification,
   Message,
   Avatar,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -30,6 +33,9 @@ Vue.use(FormItem);
 Vue.use(Input);
 Vue.use(Link);
 Vue.use(Avatar);
+Vue.use(Dropdown);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;

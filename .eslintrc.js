@@ -16,6 +16,14 @@ module.exports = {
       },
     ],
     // indent: ['error', 2],
+    'prettier/prettier': [
+      'warn',
+      {
+        // jsxBracketSameLine: true,
+        // jsxSingleQuote: true,
+        // disableLanguages: ['vue'],
+      },
+    ],
   },
   parserOptions: {
     parser: '@typescript-eslint/parser',

@@ -51,8 +51,7 @@ export default class Register extends Vue {
         const { ruleForm } = this;
 
         this.login(ruleForm).then((data: any) => {
-          console.log('-- data --', data);
-          // this.$router.push('/');
+          this.$router.push({ name: 'home' });
         });
       } else {
         return false;

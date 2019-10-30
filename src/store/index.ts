@@ -7,7 +7,7 @@ import { Storage } from '@/common/Enum';
 
 Vue.use(Vuex);
 
-let userInfo: InterfaceUserInfo = JSON.parse(localStorage.getItem(Storage.USER_INFO) || '');
+let userInfo: InterfaceUserInfo = JSON.parse(localStorage.getItem(Storage.USER_INFO) || 'null');
 
 if (!userInfo) {
   userInfo = { username: '', email: '', image: '' };

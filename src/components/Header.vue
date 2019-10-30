@@ -1,15 +1,28 @@
 <template>
   <el-header class="header" style="height: 52px;">
-    <el-row type="flex" justify="center">
-      <el-col :span="20" class="hidden-xs-only">
+    <el-row type="flex" justify="center" style="height: 100%;">
+      <el-col :span="spanNo" class="hidden-xs-only">
         <el-row type="flex" justify="end" align="middle" style="height: 100%;">
-          <el-avatar v-if="userInfo.image" :src="userInfo.image" @error="errorAvatar">
-            <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" alt="" />
-          </el-avatar>
           <div v-if="userInfo.username" class="username">{{ userInfo.username }}</div>
+          <el-dropdown v-if="!isLogin" trigger="click">
+            <el-avatar class="avatar" :src="userInfo.image" @error="errorAvatar">
+              <img
+                src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+                alt=""
+              />
+            </el-avatar>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item style="font-size: 16px;" icon="el-icon-edit-outline">
+                个人信息
+              </el-dropdown-item>
+              <el-dropdown-item style="font-size: 16px;" icon="el-icon-ice-cream-round">
+                退出
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </el-row>
       </el-col>
-      <el-col :span="4" class="hidden-xs-only">
+      <el-col :span="4" class="hidden-xs-only" v-if="isLogin">
         <el-row type="flex" justify="end">
           <router-link class="router-link" to="/login">登录</router-link>
           <router-link class="router-link" to="/register">注册</router-link>
@@ -30,6 +43,14 @@ import ElAvatar from 'element-ui/packages/avatar/src/main.vue';
 })
 export default class HelloWorld extends Vue {
   @State('userInfo') userInfo: InterfaceUserInfo;
+
+  get isLogin() {
+    return !this.userInfo.username;
+  }
+
+  get spanNo() {
+    return this.userInfo.username ? 24 : 20;
+  }
 
   public errorAvatar(): boolean {
     return true;
@@ -56,5 +77,9 @@ export default class HelloWorld extends Vue {
   font-size 14px
 
 .username
-  margin-left 10px
+  margin-right 10px
+  cursor pointer
+
+.avatar
+  cursor pointer
 </style>
