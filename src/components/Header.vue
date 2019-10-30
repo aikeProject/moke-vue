@@ -17,7 +17,11 @@
               <el-dropdown-item style="font-size: 16px;" icon="el-icon-edit-outline">
                 个人信息
               </el-dropdown-item>
-              <el-dropdown-item style="font-size: 16px;" icon="el-icon-ice-cream-round">
+              <el-dropdown-item
+                @click="logOut"
+                style="font-size: 16px;"
+                icon="el-icon-ice-cream-round"
+              >
                 退出
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -36,7 +40,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { State } from 'vuex-class';
+import { State, Action } from 'vuex-class';
 import { InterfaceUserInfo } from '@/common/Interface';
 import ElAvatar from 'element-ui/packages/avatar/src/main.vue';
 
@@ -45,6 +49,7 @@ import ElAvatar from 'element-ui/packages/avatar/src/main.vue';
 })
 export default class HelloWorld extends Vue {
   @State('userInfo') userInfo: InterfaceUserInfo;
+  @Action('logOut') logOut: Function;
 
   get isLogin() {
     return !this.userInfo.username;

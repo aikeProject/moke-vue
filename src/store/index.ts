@@ -48,6 +48,13 @@ const actions = {
       localStorage.setItem(Storage.USER_INFO, JSON.stringify(data));
     }
   },
+  logOut({ commit }: ActionContext<State, State>) {
+    // 清除本地的Token和用户信息即可
+    localStorage.removeItem(Storage.TOKEN);
+    localStorage.removeItem(Storage.USER_INFO);
+
+    commit(Mutations.SET_USER, { username: '', email: '', image: '' });
+  },
 };
 
 const modules = {};
