@@ -3,7 +3,9 @@
     <el-row type="flex" justify="center" style="height: 100%;">
       <el-col :span="spanNo" class="hidden-xs-only">
         <el-row type="flex" justify="end" align="middle" style="height: 100%;">
-          <div v-if="userInfo.username" class="username">{{ userInfo.username }}</div>
+          <div v-if="userInfo.username" class="username">
+            {{ userInfo.username }}
+          </div>
           <el-dropdown v-if="!isLogin" trigger="click">
             <el-avatar class="avatar" :src="userInfo.image" @error="errorAvatar">
               <img

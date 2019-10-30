@@ -15,15 +15,7 @@ module.exports = {
         ignoreWhenBindingPresent: false,
       },
     ],
-    // indent: ['error', 2],
-    'prettier/prettier': [
-      'warn',
-      {
-        // jsxBracketSameLine: true,
-        // jsxSingleQuote: true,
-        // disableLanguages: ['vue'],
-      },
-    ],
+    indent: ['warn', 2],
   },
   parserOptions: {
     parser: '@typescript-eslint/parser',
