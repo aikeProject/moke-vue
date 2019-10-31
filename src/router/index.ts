@@ -28,9 +28,14 @@ const router = new VueRouter({ routes });
 
 router.beforeEach((to, from, next) => {
   // Token 过期 清除存在本地的用户信息
-  UserInfo().then(() => {
-    localStorage.removeItem(Storage.USER_INFO);
-  });
+  UserInfo().then(
+    ({ data }) => {
+      localStorage.setItem(Storage.USER_INFO, JSON.stringify(data || null));
+    },
+    () => {
+      localStorage.removeItem(Storage.USER_INFO);
+    }
+  );
 
   next();
 });
