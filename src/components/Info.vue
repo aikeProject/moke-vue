@@ -25,7 +25,8 @@ export default class HelloWorld extends Vue {}
   &__title
     font-size 20px
     color #657180
-    padding-bottom 10px
+    padding 0 20px 10px
   &__content
     color #98a6ad
+    padding 0 20px
 </style>
