@@ -6,7 +6,7 @@
           <div v-if="userInfo.username" class="username">
             {{ userInfo.username }}
           </div>
-          <el-dropdown v-if="!isLogin" trigger="click">
+          <el-dropdown @command="handleCommand" v-if="!isLogin" trigger="click">
             <el-avatar class="avatar" :src="userInfo.image" @error="errorAvatar">
               <img
                 src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
@@ -14,11 +14,11 @@
               />
             </el-avatar>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item style="font-size: 16px;" icon="el-icon-edit-outline">
+              <el-dropdown-item command="info" style="font-size: 16px;" icon="el-icon-edit-outline">
                 个人信息
               </el-dropdown-item>
               <el-dropdown-item
-                @click="logOut"
+                command="out"
                 style="font-size: 16px;"
                 icon="el-icon-ice-cream-round"
               >
@@ -61,6 +61,18 @@ export default class HelloWorld extends Vue {
 
   public errorAvatar(): boolean {
     return true;
+  }
+
+  public handleCommand(command: 'info' | 'out'): void {
+    if (command === 'info') {
+      // do something
+    }
+
+    if (command === 'out') {
+      this.logOut().then(() => {
+        this.$router.push({ name: 'login' });
+      });
+    }
   }
 }
 </script>
