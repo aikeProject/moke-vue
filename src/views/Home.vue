@@ -11,7 +11,14 @@
         <el-container class="is-vertical home-container">
           <Header></Header>
           <el-container>
-            <el-main class="home-main"></el-main>
+            <el-main class="home-main">
+              <Info>
+                <template v-slot:title>
+                  哈哈
+                </template>
+                Here might be a page title
+              </Info>
+            </el-main>
             <el-aside width="240px"></el-aside>
           </el-container>
         </el-container>
@@ -23,11 +30,13 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import Header from '@/components/Header.vue';
+import Info from '@/components/Info.vue';
 import { InterfaceUserInfo } from '../common/Interface';
 
 @Component({
   components: {
     Header,
+    Info,
   },
 })
 export default class Home extends Vue {}
