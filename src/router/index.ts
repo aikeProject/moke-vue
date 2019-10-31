@@ -16,19 +16,22 @@ const routes = [
     component: Home,
     children: [
       {
-        path: 'index',
-        component: Index,
+        path: '/',
+        name: 'index',
+        component: () => import(/* webpackChunkName: "Index" */ '../views/Index.vue'),
       },
     ],
   },
   {
     path: '/personal',
     name: 'personal',
-    component: PersonalHome,
+    component: () => import(/* webpackChunkName: "PersonalHome" */ '../views/PersonalHome.vue'),
     children: [
       {
-        path: 'personalIndex',
-        component: PersonalIndex,
+        path: '/',
+        name: 'PersonalIndex',
+        component: () =>
+          import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
       },
     ],
   },
