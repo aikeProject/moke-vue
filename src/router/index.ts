@@ -1,9 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import Index from '../views/Index.vue';
-import PersonalHome from '../views/PersonalHome.vue';
-import PersonalIndex from '../views/PersonalIndex.vue';
 import { UserInfo } from '@/common/Api';
 import { Storage } from '@/common/Enum';
 
