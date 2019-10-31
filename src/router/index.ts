@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Index from '../views/Index.vue';
+import PersonalHome from '../views/PersonalHome.vue';
+import PersonalIndex from '../views/PersonalIndex.vue';
 import { UserInfo } from '@/common/Api';
 import { Storage } from '@/common/Enum';
 
@@ -16,6 +18,17 @@ const routes = [
       {
         path: 'index',
         component: Index,
+      },
+    ],
+  },
+  {
+    path: '/personal',
+    name: 'personal',
+    component: PersonalHome,
+    children: [
+      {
+        path: 'personalIndex',
+        component: PersonalIndex,
       },
     ],
   },
