@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import Index from '../views/Index.vue';
 import { UserInfo } from '@/common/Api';
 import { Storage } from '@/common/Enum';
 
@@ -11,6 +12,12 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
+    children: [
+      {
+        path: 'index',
+        component: Index,
+      },
+    ],
   },
   {
     path: '/login',
