@@ -4,7 +4,7 @@
  * @Description: 请求接口
  */
 
-import request from '../utils/request';
+import request, { requestBase } from '../utils/request';
 import {
   InterfaceRegister,
   InterfaceRegisterResponse,
@@ -26,4 +26,5 @@ export const LoginApi = (data: InterfaceLogin, config?: AxiosRequestConfig) => {
 };
 
 // 查看当前登录用户信息
-export const UserInfo = () => request.get<InterfaceUserInfo>(`${BASE}/user/1/`);
+export const UserInfo = () =>
+  requestBase({ error: false }).get<InterfaceUserInfo>(`${BASE}/user/1/`);
