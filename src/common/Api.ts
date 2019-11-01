@@ -10,6 +10,9 @@ import {
   InterfaceRegisterResponse,
   InterfaceLogin,
   InterfaceUserInfo,
+  InterfaceArticle,
+  InterfaceArticleList,
+  InterfacePagination,
 } from './Interface';
 import { AxiosRequestConfig } from 'axios';
 
@@ -28,3 +31,13 @@ export const LoginApi = (data: InterfaceLogin, config?: AxiosRequestConfig) => {
 // 查看当前登录用户信息
 export const UserInfo = () =>
   requestBase({ error: false }).get<InterfaceUserInfo>(`${BASE}/user/1/`);
+
+// 文章列表
+export const ArticlesList = (params: InterfacePagination) => {
+  return request.get<InterfaceArticleList>(`${BASE}/articles/`, { params });
+};
+
+// 文章详情
+export const ArticlesRead = (slug: string) => {
+  return request.get<InterfaceArticle>(`${BASE}/articles/${slug}/`);
+};

@@ -8,25 +8,34 @@
         Here might be a page title
       </Info>
       <div style="height: 20px"></div>
-      <Article>
-        <template v-slot:title>
-          Perfree-Simple-Pro-致更好的你
-        </template>
-        一款高仿Typecho的handsome博客主题 主题简介 抛弃一切繁琐,只想简简单单的呈现你的文采,如你所见,
-        这是一款简约清新的博客主题模板,该模板收费69元,包含相册插件和留言板插件(开发中)以及以后所有新出的插件,你只管创作,其他交给
-        <template v-slot:footer>
-          <router-link to="">阅读全文</router-link>
-        </template>
-      </Article>
+      <div v-for="item in articles" :key="item.id">
+        <Article class="article--margin">
+          <template v-slot:title>
+            {{ item.title }}
+          </template>
+          {{ item.description }}
+          <template v-slot:footer>
+            <router-link to="">阅读全文</router-link>
+          </template>
+        </Article>
+      </div>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="total"
+        :current-page.sync="currentPage"
+      ></el-pagination>
     </el-main>
     <el-aside class="home-aside" width="240px"></el-aside>
   </el-container>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import Info from '@/components/Info.vue';
 import Article from '@/components/Article.vue';
+import { InterfaceArticle } from '@/common/Interface';
+import { ArticlesList } from '@/common/Api';
 
 @Component({
   components: {
@@ -35,7 +44,23 @@ import Article from '@/components/Article.vue';
   },
 })
 export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
+  public articles: InterfaceArticle[] = [];
+  public total: number = 0;
+  public currentPage: number = 0;
+
+  @Watch('currentPage')
+  public onChildChanged(val: number, oldVal: number) {
+    const { currentPage: page } = this;
+
+    ArticlesList({ page }).then(({ data }) => {
+      this.articles = data.results || [];
+      this.total = data.count || 0;
+    });
+  }
+
+  public mounted() {
+    this.currentPage = 1;
+  }
 }
 </script>
 
@@ -43,4 +68,7 @@ export default class HelloWorld extends Vue {
 <style scoped lang="stylus">
 .home-aside
   background #f9f9f9
+
+.article--margin
+  margin-bottom 20px
 </style>

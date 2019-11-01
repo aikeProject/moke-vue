@@ -19,6 +19,7 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
+  Pagination,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -36,6 +37,7 @@ Vue.use(Avatar);
 Vue.use(Dropdown);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
+Vue.use(Pagination);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;

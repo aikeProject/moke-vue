@@ -26,3 +26,32 @@ export interface InterfaceUserInfo {
   email: string;
   image: string;
 }
+
+export interface InterfacePagination {
+  page: number;
+  page_size?: number;
+}
+
+export interface InterfaceArticle {
+  author: {
+    email: string;
+    username: string;
+    image: string;
+    following: boolean;
+  };
+  body: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  slug: string;
+  favorite: boolean;
+  favoritesCount: string;
+}
+
+export interface InterfaceArticleList {
+  count: number;
+  next: string;
+  previous: string;
+  results: InterfaceArticle[];
+}
