@@ -22,7 +22,7 @@ export default class HelloWorld extends Vue {}
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
 .article
-  padding 30px
+  padding 30px 30px 20px
   background: #fff
   border 1px solid transparent
   box-shadow 0 2px 2px rgba(0,0,0,.05)
@@ -41,6 +41,6 @@ export default class HelloWorld extends Vue {}
     padding 10px 0
 
   footer
-    padding-top 10px
+    padding-top 20px
     border-top 1px solid #edf1f2
 </style>

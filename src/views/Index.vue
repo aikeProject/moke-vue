@@ -15,7 +15,9 @@
           </template>
           {{ item.description }}
           <template v-slot:footer>
-            <router-link to="">阅读全文</router-link>
+            <el-row type="flex" align="middle" justify="end">
+              <router-link class="el-link el-link--default" to="">阅读全文</router-link>
+            </el-row>
           </template>
         </Article>
       </div>
