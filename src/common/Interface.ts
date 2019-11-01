@@ -41,8 +41,8 @@ export interface InterfaceArticle {
   };
   body: string;
   description: string;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
   title: string;
   slug: string;
   favorite: boolean;

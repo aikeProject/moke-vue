@@ -15,7 +15,13 @@
           </template>
           {{ item.description }}
           <template v-slot:footer>
-            <el-row type="flex" align="middle" justify="end">
+            <el-row type="flex" align="middle" justify="space-between">
+              <div>
+                <time>
+                  <i style="padding-right: 5px;" class="el-icon-time"></i>
+                  {{ item.updated_at }}
+                </time>
+              </div>
               <router-link class="el-link el-link--default" to="">阅读全文</router-link>
             </el-row>
           </template>
@@ -73,4 +79,7 @@ export default class HelloWorld extends Vue {
 
 .article--margin
   margin-bottom 20px
+
+time
+  color #98a6ad
 </style>
