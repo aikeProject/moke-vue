@@ -42,7 +42,24 @@
         :current-page.sync="currentPage"
       ></el-pagination>
     </el-main>
-    <el-aside class="home-aside" width="240px"></el-aside>
+    <el-aside class="home-aside" width="240px">
+      <div class="category-list">
+        <div class="tag-title">分类</div>
+        <el-row class="tag-wrapper" type="flex">
+          <div v-for="item in categorys" :key="item.id">
+            <el-tag class="tag">{{ item.title }}</el-tag>
+          </div>
+        </el-row>
+      </div>
+      <div class="tag-list">
+        <div class="tag-title">标签</div>
+        <el-row class="tag-wrapper" type="flex">
+          <div v-for="item in tags" :key="item.id">
+            <el-tag class="tag">{{ item.title }}</el-tag>
+          </div>
+        </el-row>
+      </div>
+    </el-aside>
   </el-container>
 </template>
 
@@ -50,8 +67,14 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import Info from '@/components/Info.vue';
 import Article from '@/components/Article.vue';
-import { InterfaceArticle } from '@/common/Interface';
-import { articleFavoriteCreate, articleFavoriteDelete, ArticlesList } from '@/common/Api';
+import { InterfaceArticle, InterfaceTag, InterfaceCategory } from '@/common/Interface';
+import {
+  articleFavoriteCreate,
+  articleFavoriteDelete,
+  ArticlesList,
+  categoryList,
+  tagList,
+} from '@/common/Api';
 
 @Component({
   components: {
@@ -63,6 +86,8 @@ export default class HelloWorld extends Vue {
   public articles: InterfaceArticle[] = [];
   public total: number = 0;
   public currentPage: number = 0;
+  public tags: InterfaceTag[] = [];
+  public categorys: InterfaceCategory[] = [];
 
   @Watch('currentPage')
   public onChildChanged(val: number, oldVal: number) {
@@ -73,6 +98,14 @@ export default class HelloWorld extends Vue {
 
   public mounted() {
     this.currentPage = 1;
+
+    tagList().then(({ data }) => {
+      this.tags = data || [];
+    });
+
+    categoryList().then(({ data }) => {
+      this.categorys = data || [];
+    });
   }
 
   public articleList(page: number) {
@@ -132,4 +165,24 @@ time
   &.favorite--success
     color #393d49
     font-size 22px
+
+.tag-list
+  padding 10px
+
+.tag
+  margin-right 10px
+  margin-bottom 10px
+  cursor pointer
+
+.tag-wrapper
+  flex-wrap wrap
+  padding 10px 0 10px 10px
+
+.tag-title
+  font-size 16px
+  color #606266
+  padding 10px 10px 5px 10px
+
+.category-list
+  padding 10px
 </style>

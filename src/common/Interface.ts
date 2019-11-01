@@ -55,3 +55,15 @@ export interface InterfaceArticleList {
   previous: string;
   results: InterfaceArticle[];
 }
+
+export interface InterfaceTag {
+  id: number;
+  title: string;
+  blog: number;
+}
+
+export interface InterfaceCategory {
+  id: number;
+  title: string;
+  blog: number;
+}

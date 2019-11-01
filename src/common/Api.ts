@@ -13,6 +13,8 @@ import {
   InterfaceArticle,
   InterfaceArticleList,
   InterfacePagination,
+  InterfaceTag,
+  InterfaceCategory,
 } from './Interface';
 import { AxiosRequestConfig } from 'axios';
 
@@ -50,4 +52,14 @@ export const articleFavoriteCreate = (article_slug: string) => {
 // 取消收藏 articles > favorite > delete
 export const articleFavoriteDelete = (article_slug: string) => {
   return request.delete(`${BASE}/articles/${article_slug}/favorite`);
+};
+
+// 获取标签
+export const tagList = () => {
+  return request.get<InterfaceTag[]>(`${BASE}/tag/`);
+};
+
+// /api/category/
+export const categoryList = () => {
+  return request.get<InterfaceCategory[]>(`${BASE}/category/`);
 };

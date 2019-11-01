@@ -20,6 +20,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Pagination,
+  Tag,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -38,6 +39,7 @@ Vue.use(Dropdown);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.use(Pagination);
+Vue.use(Tag);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;
