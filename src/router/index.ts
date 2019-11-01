@@ -9,7 +9,6 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'home',
     component: Home,
     children: [
       {
@@ -21,12 +20,11 @@ const routes = [
   },
   {
     path: '/personal',
-    name: 'personal',
     component: () => import(/* webpackChunkName: "PersonalHome" */ '../views/PersonalHome.vue'),
     children: [
       {
         path: '/',
-        name: 'PersonalIndex',
+        name: 'personal',
         component: () =>
           import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
       },
