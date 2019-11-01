@@ -11,7 +11,15 @@
       <div v-for="item in articles" :key="item.id">
         <Article class="article--margin">
           <template v-slot:title>
-            {{ item.title }}
+            <div class="article-title">
+              {{ item.title }}
+              <i
+                v-if="item.favorite"
+                @click="favoriteDelete(item.slug)"
+                class="el-icon-star-on favorite favorite--success"
+              ></i>
+              <i v-else @click="favorite(item.slug)" class="el-icon-star-off favorite"></i>
+            </div>
           </template>
           {{ item.description }}
           <template v-slot:footer>
@@ -43,7 +51,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import Info from '@/components/Info.vue';
 import Article from '@/components/Article.vue';
 import { InterfaceArticle } from '@/common/Interface';
-import { ArticlesList } from '@/common/Api';
+import { articleFavoriteCreate, articleFavoriteDelete, ArticlesList } from '@/common/Api';
 
 @Component({
   components: {
@@ -60,14 +68,42 @@ export default class HelloWorld extends Vue {
   public onChildChanged(val: number, oldVal: number) {
     const { currentPage: page } = this;
 
+    this.articleList(page);
+  }
+
+  public mounted() {
+    this.currentPage = 1;
+  }
+
+  public articleList(page: number) {
     ArticlesList({ page }).then(({ data }) => {
       this.articles = data.results || [];
       this.total = data.count || 0;
     });
   }
 
-  public mounted() {
-    this.currentPage = 1;
+  /**
+   * 收藏
+   * @param article_slug
+   */
+  public favorite(article_slug: string) {
+    articleFavoriteCreate(article_slug).then(() => {
+      const { currentPage: page } = this;
+
+      this.articleList(page);
+    });
+  }
+
+  /**
+   * 取消搜藏
+   * @param article_slug
+   */
+  public favoriteDelete(article_slug: string) {
+    articleFavoriteDelete(article_slug).then(() => {
+      const { currentPage: page } = this;
+
+      this.articleList(page);
+    });
   }
 }
 </script>
@@ -82,4 +118,18 @@ export default class HelloWorld extends Vue {
 
 time
   color #98a6ad
+  font-size 12px
+
+.article-title
+  position relative
+
+.favorite
+  position absolute
+  top 0
+  right 0
+  font-size 20px
+
+  &.favorite--success
+    color #393d49
+    font-size 22px
 </style>

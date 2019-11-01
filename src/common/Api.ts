@@ -41,3 +41,13 @@ export const ArticlesList = (params: InterfacePagination) => {
 export const ArticlesRead = (slug: string) => {
   return request.get<InterfaceArticle>(`${BASE}/articles/${slug}/`);
 };
+
+// 收藏 articles > favorite > create
+export const articleFavoriteCreate = (article_slug: string) => {
+  return request.post(`${BASE}/articles/${article_slug}/favorite`);
+};
+
+// 取消收藏 articles > favorite > delete
+export const articleFavoriteDelete = (article_slug: string) => {
+  return request.delete(`${BASE}/articles/${article_slug}/favorite`);
+};
