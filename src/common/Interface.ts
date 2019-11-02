@@ -74,3 +74,12 @@ export interface InterfaceCategory {
   title: string;
   blog: number;
 }
+
+export interface InterfaceWebCategory {
+  id: number;
+  category_list: InterfaceWebCategory[];
+  created_at: string;
+  updated_at: string;
+  name: string;
+  parent_category: number;
+}

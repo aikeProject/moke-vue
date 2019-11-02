@@ -43,42 +43,25 @@
         :current-page.sync="currentPage"
       ></el-pagination>
     </el-main>
-    <el-aside class="home-aside" width="240px">
-      <div class="category-list">
-        <div class="tag-title">
+    <el-aside class="aside" width="240px">
+      <div class="aside-wrapper">
+        <div style="height: 10px;"></div>
+        <div class="title">
           <router-link :to="{ name: 'index' }">
-            <el-link type="primary">分类</el-link>
+            <el-link style="font-size: 16px;" type="primary">网站分类</el-link>
           </router-link>
         </div>
-        <el-row class="tag-wrapper" type="flex">
-          <template v-for="item in categorys">
-            <router-link
-              :key="item.id"
-              :to="{ name: 'categoryTag', params: { name: 'category', id: item.id } }"
-            >
-              <el-tag class="tag">{{ item.title }}</el-tag>
-            </router-link>
-          </template>
-        </el-row>
-      </div>
-      <div class="tag-list">
-        <div class="tag-title">
-          <router-link :to="{ name: 'index' }">
-            <el-link type="primary">标签</el-link>
-          </router-link>
+        <div class="category-list">
+          <el-tree
+            class="category-tree"
+            :data="treeCategory"
+            :props="defaultTreeProps"
+            accordion
+            default-expand-all
+            @node-click="nodeClick"
+          >
+          </el-tree>
         </div>
-        <el-row class="tag-wrapper" type="flex">
-          <template v-for="item in tags">
-            <div :key="item.id">
-              <router-link
-                :key="item.id"
-                :to="{ name: 'categoryTag', params: { name: 'tag', id: item.id } }"
-              >
-                <el-tag class="tag">{{ item.title }}</el-tag>
-              </router-link>
-            </div>
-          </template>
-        </el-row>
       </div>
     </el-aside>
   </el-container>
@@ -90,16 +73,14 @@ import Info from '@/components/Info.vue';
 import Article from '@/components/Article.vue';
 import {
   InterfaceArticle,
-  InterfaceTag,
-  InterfaceCategory,
   InterfaceArticlesRequest,
+  InterfaceWebCategory,
 } from '@/common/Interface';
 import {
   articleFavoriteCreate,
   articleFavoriteDelete,
   ArticlesList,
-  categoryList,
-  tagList,
+  webCategoryList,
 } from '@/common/Api';
 
 @Component({
@@ -111,11 +92,12 @@ import {
 export default class HelloWorld extends Vue {
   @Prop({ default: '' }) private name: 'category' | 'tag';
   @Prop({ default: '' }) private id: string;
+
   public articles: InterfaceArticle[] = [];
   public total: number = 0;
   public currentPage: number = 0;
-  public tags: InterfaceTag[] = [];
-  public categorys: InterfaceCategory[] = [];
+  public defaultTreeProps: any = { children: 'child', label: 'name' };
+  public treeCategory: InterfaceWebCategory[] = [];
 
   @Watch('currentPage')
   public onChildChanged(page: number, oldVal: number) {
@@ -132,12 +114,8 @@ export default class HelloWorld extends Vue {
   public created() {
     this.articleList();
 
-    tagList().then(({ data }) => {
-      this.tags = data || [];
-    });
-
-    categoryList().then(({ data }) => {
-      this.categorys = data || [];
+    webCategoryList().then(({ data }) => {
+      this.treeCategory = data || [];
     });
   }
 
@@ -180,12 +158,26 @@ export default class HelloWorld extends Vue {
       this.articleList(page);
     });
   }
+
+  public nodeClick(data: any) {
+    console.log(data);
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
-.home-aside
+
+.aside
+  overflow unset
+  background #f9f9f9
+  height calc(100vh - 52px)
+
+.aside-wrapper
+  position fixed
+  top 52px
+  width 240px
+  height 100%
   background #f9f9f9
 
 .article--margin
@@ -208,26 +200,15 @@ time
     color #393d49
     font-size 22px
 
-.tag-list
-  padding 10px
-
-.tag
-  margin-right 10px
-  margin-bottom 10px
-  cursor pointer
-
-  &:hover
-    background-color #393d49
-    color #fff
-
-.tag-wrapper
-  flex-wrap wrap
-  padding 10px 0 10px 10px
-
-.tag-title
-  font-size 16px
-  padding 10px 10px 5px 10px
-
 .category-list
   padding 10px
+
+.category-tree
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+  border-radius 2px
+  padding 5px 0
+
+.title
+  font-size 16px
+  padding 10px 10px 5px 10px
 </style>

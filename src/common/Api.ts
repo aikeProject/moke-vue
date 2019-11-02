@@ -15,6 +15,7 @@ import {
   InterfaceTag,
   InterfaceCategory,
   InterfaceArticlesRequest,
+  InterfaceWebCategory,
 } from './Interface';
 import { AxiosRequestConfig } from 'axios';
 
@@ -59,7 +60,12 @@ export const tagList = (uid?: string) => {
   return request.get<InterfaceTag[]>(`${BASE}/tag/`, { params: { uid } });
 };
 
-// /api/category/
+// 博客分类
 export const categoryList = () => {
   return request.get<InterfaceCategory[]>(`${BASE}/category/`);
+};
+
+// webCategory > list 网站分类
+export const webCategoryList = () => {
+  return request.get<InterfaceWebCategory[]>(`${BASE}/webCategory/`);
 };
