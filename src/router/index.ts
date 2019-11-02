@@ -17,7 +17,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "Index" */ '../views/Index.vue'),
       },
       {
-        path: '/:name/:id?',
+        path: 'index/:name/:id?',
         name: 'categoryTag',
         props: true,
         component: () => import(/* webpackChunkName: "Index" */ '../views/Index.vue'),
@@ -25,12 +25,20 @@ const routes = [
     ],
   },
   {
-    path: '/personal',
+    path: '/personal/:uid',
+    props: true,
     component: () => import(/* webpackChunkName: "PersonalHome" */ '../views/PersonalHome.vue'),
     children: [
       {
-        path: '/',
+        path: 'user',
         name: 'personal',
+        component: () =>
+          import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
+      },
+      {
+        path: 'user/:name/:id?',
+        name: 'personalCategoryTag',
+        props: true,
         component: () =>
           import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
       },
