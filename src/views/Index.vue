@@ -36,6 +36,7 @@
         </Article>
       </div>
       <el-pagination
+        v-if="currentPage > 1"
         background
         layout="prev, pager, next"
         :total="total"
@@ -44,21 +45,39 @@
     </el-main>
     <el-aside class="home-aside" width="240px">
       <div class="category-list">
-        <div class="tag-title">分类</div>
+        <div class="tag-title">
+          <router-link to="/">
+            <el-link type="primary">分类</el-link>
+          </router-link>
+        </div>
         <el-row class="tag-wrapper" type="flex">
-          <div v-for="item in categorys" :key="item.id">
-            <router-link :to="{ name: 'categoryTag', params: { name: 'category', id: item.id } }">
+          <template v-for="item in categorys">
+            <router-link
+              :key="item.id"
+              :to="{ name: 'categoryTag', params: { name: 'category', id: item.id } }"
+            >
               <el-tag class="tag">{{ item.title }}</el-tag>
             </router-link>
-          </div>
+          </template>
         </el-row>
       </div>
       <div class="tag-list">
-        <div class="tag-title">标签</div>
+        <div class="tag-title">
+          <router-link to="/">
+            <el-link type="primary">标签</el-link>
+          </router-link>
+        </div>
         <el-row class="tag-wrapper" type="flex">
-          <div v-for="item in tags" :key="item.id">
-            <el-tag class="tag">{{ item.title }}</el-tag>
-          </div>
+          <template v-for="item in tags">
+            <div :key="item.id">
+              <router-link
+                :key="item.id"
+                :to="{ name: 'categoryTag', params: { name: 'tag', id: item.id } }"
+              >
+                <el-tag class="tag">{{ item.title }}</el-tag>
+              </router-link>
+            </div>
+          </template>
         </el-row>
       </div>
     </el-aside>
@@ -197,13 +216,16 @@ time
   margin-bottom 10px
   cursor pointer
 
+  &:hover
+    background-color #393d49
+    color #fff
+
 .tag-wrapper
   flex-wrap wrap
   padding 10px 0 10px 10px
 
 .tag-title
   font-size 16px
-  color #606266
   padding 10px 10px 5px 10px
 
 .category-list
