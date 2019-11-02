@@ -109,6 +109,15 @@ npm i lint-staged -D
 
 ```
 
+### `eslint` 相关
+
+- 在`.eslintrc.js`的配置中有`@vue/prettier`这个规则继承
+
+```
+@vue/prettier 的作用是：
+  关闭一些与"prettier"冲突的"eslint"规则
+```
+
 ### element 自定制主题
 
 - npm i element-theme -g
