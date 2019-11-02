@@ -34,7 +34,7 @@ npm run lint
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### prettier 代码格式化
+### prettier 代码格式化 [prettier ->](https://prettier.io/)
 
 - 创建`.prettierrc`配置文件
 
@@ -109,7 +109,7 @@ npm i lint-staged -D
 
 ```
 
-### `eslint` 相关
+### `eslint` 相关 [vue 相关规则配置 ->](https://eslint.vuejs.org/)
 
 - 在`.eslintrc.js`的配置中有`@vue/prettier`这个规则继承
 
