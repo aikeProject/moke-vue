@@ -32,6 +32,13 @@ export interface InterfacePagination {
   page_size?: number;
 }
 
+export interface InterfaceArticlesRequest extends InterfacePagination {
+  search?: string;
+  category?: string;
+  uid?: string;
+  tagId?: string;
+}
+
 export interface InterfaceArticle {
   author: {
     email: string;

@@ -12,9 +12,9 @@ import {
   InterfaceUserInfo,
   InterfaceArticle,
   InterfaceArticleList,
-  InterfacePagination,
   InterfaceTag,
   InterfaceCategory,
+  InterfaceArticlesRequest,
 } from './Interface';
 import { AxiosRequestConfig } from 'axios';
 
@@ -35,7 +35,7 @@ export const UserInfo = () =>
   requestBase({ error: false }).get<InterfaceUserInfo>(`${BASE}/user/1/`);
 
 // 文章列表
-export const ArticlesList = (params: InterfacePagination) => {
+export const ArticlesList = (params: InterfaceArticlesRequest) => {
   return request.get<InterfaceArticleList>(`${BASE}/articles/`, { params });
 };
 

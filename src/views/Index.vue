@@ -47,7 +47,9 @@
         <div class="tag-title">分类</div>
         <el-row class="tag-wrapper" type="flex">
           <div v-for="item in categorys" :key="item.id">
-            <el-tag class="tag">{{ item.title }}</el-tag>
+            <router-link :to="{ name: 'categoryTag', params: { name: 'category', id: item.id } }">
+              <el-tag class="tag">{{ item.title }}</el-tag>
+            </router-link>
           </div>
         </el-row>
       </div>
@@ -64,10 +66,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
 import Info from '@/components/Info.vue';
 import Article from '@/components/Article.vue';
-import { InterfaceArticle, InterfaceTag, InterfaceCategory } from '@/common/Interface';
+import {
+  InterfaceArticle,
+  InterfaceTag,
+  InterfaceCategory,
+  InterfaceArticlesRequest,
+} from '@/common/Interface';
 import {
   articleFavoriteCreate,
   articleFavoriteDelete,
@@ -83,6 +90,8 @@ import {
   },
 })
 export default class HelloWorld extends Vue {
+  @Prop({ default: '' }) private name: 'category' | 'tag';
+  @Prop({ default: '' }) private id: string;
   public articles: InterfaceArticle[] = [];
   public total: number = 0;
   public currentPage: number = 0;
@@ -90,14 +99,19 @@ export default class HelloWorld extends Vue {
   public categorys: InterfaceCategory[] = [];
 
   @Watch('currentPage')
-  public onChildChanged(val: number, oldVal: number) {
-    const { currentPage: page } = this;
-
+  public onChildChanged(page: number, oldVal: number) {
     this.articleList(page);
   }
 
-  public mounted() {
-    this.currentPage = 1;
+  // 监听路由变化
+  @Watch('$route')
+  public routerChange() {
+    this.articleList();
+  }
+
+  // 组件创建完成 可在这里获取数据
+  public created() {
+    this.articleList();
 
     tagList().then(({ data }) => {
       this.tags = data || [];
@@ -108,8 +122,17 @@ export default class HelloWorld extends Vue {
     });
   }
 
-  public articleList(page: number) {
-    ArticlesList({ page }).then(({ data }) => {
+  public mounted() {}
+
+  public articleList(page: number = 1) {
+    const { name, id } = this;
+
+    let requestData: InterfaceArticlesRequest = { page };
+
+    if (name === 'category') requestData.category = id;
+    if (name === 'tag') requestData.tagId = id;
+
+    ArticlesList(requestData).then(({ data }) => {
       this.articles = data.results || [];
       this.total = data.count || 0;
     });

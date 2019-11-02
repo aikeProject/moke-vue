@@ -16,6 +16,12 @@ const routes = [
         name: 'index',
         component: () => import(/* webpackChunkName: "Index" */ '../views/Index.vue'),
       },
+      {
+        path: '/:name/:id?',
+        name: 'categoryTag',
+        props: true,
+        component: () => import(/* webpackChunkName: "Index" */ '../views/Index.vue'),
+      },
     ],
   },
   {
