@@ -55,8 +55,8 @@ export const articleFavoriteDelete = (article_slug: string) => {
 };
 
 // 获取标签
-export const tagList = () => {
-  return request.get<InterfaceTag[]>(`${BASE}/tag/`);
+export const tagList = (uid?: string) => {
+  return request.get<InterfaceTag[]>(`${BASE}/tag/`, { params: { uid } });
 };
 
 // /api/category/

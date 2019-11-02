@@ -46,7 +46,7 @@
     <el-aside class="home-aside" width="240px">
       <div class="category-list">
         <div class="tag-title">
-          <router-link to="/">
+          <router-link :to="{ name: 'index' }">
             <el-link type="primary">分类</el-link>
           </router-link>
         </div>
@@ -63,7 +63,7 @@
       </div>
       <div class="tag-list">
         <div class="tag-title">
-          <router-link to="/">
+          <router-link :to="{ name: 'index' }">
             <el-link type="primary">标签</el-link>
           </router-link>
         </div>

@@ -25,19 +25,19 @@ const routes = [
     ],
   },
   {
-    path: '/personal/:uid',
+    path: '/user/:uid',
     props: true,
     component: () => import(/* webpackChunkName: "PersonalHome" */ '../views/PersonalHome.vue'),
     children: [
       {
-        path: 'user',
-        name: 'personal',
+        path: 'home',
+        name: 'user',
         component: () =>
           import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
       },
       {
-        path: 'user/:name/:id?',
-        name: 'personalCategoryTag',
+        path: 'home/:name/:id?',
+        name: 'userCategoryTag',
         props: true,
         component: () =>
           import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
@@ -53,6 +53,12 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
+  },
+  {
+    path: '*',
+    beforeEnter: () => {
+      window.location.href = '404.html';
+    },
   },
 ];
 

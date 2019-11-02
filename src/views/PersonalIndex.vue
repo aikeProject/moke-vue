@@ -47,7 +47,7 @@
       <div class="aside-right">
         <div class="category-list">
           <div class="tag-title">
-            <router-link :to="{ name: 'personal' }">
+            <router-link :to="{ name: 'user' }">
               <el-link type="primary">分类</el-link>
             </router-link>
           </div>
@@ -55,7 +55,7 @@
             <template v-for="item in categorys">
               <router-link
                 :key="item.id"
-                :to="{ name: 'personalCategoryTag', params: { name: 'category', id: item.id } }"
+                :to="{ name: 'userCategoryTag', params: { name: 'category', id: item.id } }"
               >
                 <el-tag class="tag">{{ item.title }}</el-tag>
               </router-link>
@@ -64,7 +64,7 @@
         </div>
         <div class="tag-list">
           <div class="tag-title">
-            <router-link :to="{ name: 'personal' }">
+            <router-link :to="{ name: 'user' }">
               <el-link type="primary">标签</el-link>
             </router-link>
           </div>
@@ -73,7 +73,7 @@
               <div :key="item.id">
                 <router-link
                   :key="item.id"
-                  :to="{ name: 'personalCategoryTag', params: { name: 'tag', id: item.id } }"
+                  :to="{ name: 'userCategoryTag', params: { name: 'tag', id: item.id } }"
                 >
                   <el-tag class="tag">{{ item.title }}</el-tag>
                 </router-link>
@@ -130,25 +130,22 @@ export default class HelloWorld extends Vue {
   @Watch('$route')
   public routerChange() {
     this.articleList();
+    this.tagList();
+    this.categoryList();
   }
 
   // 组件创建完成 可在这里获取数据
   public created() {
     this.articleList();
-
-    tagList().then(({ data }) => {
-      this.tags = data || [];
-    });
-
-    categoryList().then(({ data }) => {
-      this.categorys = data || [];
-    });
+    this.tagList();
+    this.categoryList();
   }
 
   public mounted() {}
 
   public articleList(page: number = 1) {
     const { name, id, uid } = this;
+    page = page < 1 ? 1 : page;
 
     let requestData: InterfaceArticlesRequest = { page };
 
@@ -159,6 +156,20 @@ export default class HelloWorld extends Vue {
     ArticlesList(requestData).then(({ data }) => {
       this.articles = data.results || [];
       this.total = data.count || 0;
+    });
+  }
+
+  public tagList() {
+    const { uid } = this;
+
+    tagList(uid).then(({ data }) => {
+      this.tags = data || [];
+    });
+  }
+
+  public categoryList() {
+    categoryList().then(({ data }) => {
+      this.categorys = data || [];
     });
   }
 
@@ -208,7 +219,7 @@ export default class HelloWorld extends Vue {
   position fixed
   top 52px
   width 240px
-  height 100px
+  height 100%
   background #f9f9f9
 
 .home-aside
