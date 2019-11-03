@@ -37,6 +37,7 @@ export interface InterfaceArticlesRequest extends InterfacePagination {
   category?: string;
   uid?: string;
   tagId?: string;
+  web_category?: number;
 }
 
 export interface InterfaceArticle {

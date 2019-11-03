@@ -90,7 +90,6 @@ import {
   },
 })
 export default class HelloWorld extends Vue {
-  @Prop({ default: '' }) private name: 'category' | 'tag';
   @Prop({ default: '' }) private id: string;
 
   public articles: InterfaceArticle[] = [];
@@ -122,12 +121,11 @@ export default class HelloWorld extends Vue {
   public mounted() {}
 
   public articleList(page: number = 1) {
-    const { name, id } = this;
+    page = page < 1 ? 1 : page;
+    const { id } = this;
 
     let requestData: InterfaceArticlesRequest = { page };
-
-    if (name === 'category') requestData.category = id;
-    if (name === 'tag') requestData.tagId = id;
+    if (id) requestData.web_category = Number(id);
 
     ArticlesList(requestData).then(({ data }) => {
       this.articles = data.results || [];
@@ -159,8 +157,11 @@ export default class HelloWorld extends Vue {
     });
   }
 
-  public nodeClick(data: any) {
-    console.log(data);
+  public nodeClick({ id }: InterfaceWebCategory) {
+    this.$router.push({
+      name: 'webCategory',
+      params: { id: id.toString() },
+    });
   }
 }
 </script>
