@@ -12,7 +12,7 @@ export default class App extends Vue {}
 </script>
 
 <style lang="stylus">
-@import 'style/reset.styl';
+@import "style/markdown.styl";
 
 body
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

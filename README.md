@@ -211,3 +211,15 @@ export default class FirstPage extends Vue {
 </script>
 
 ```
+
+#### `simplemde-markdown-editor` markdown 编辑器
+
+```
+npm install simplemde --save
+```
+
+#### `showdown` Markdown 转化为 Html
+
+```
+npm install showdown
+```

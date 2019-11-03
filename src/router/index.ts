@@ -45,6 +45,11 @@ const routes = [
     ],
   },
   {
+    path: '/editor',
+    name: 'editor',
+    component: () => import(/* webpackChunkName: "editor" */ '../views/Editor.vue'),
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
