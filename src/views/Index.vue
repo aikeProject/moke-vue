@@ -58,6 +58,7 @@
             :props="defaultTreeProps"
             accordion
             default-expand-all
+            :expand-on-click-node="false"
             @node-click="nodeClick"
           >
           </el-tree>
@@ -125,7 +126,7 @@ export default class HelloWorld extends Vue {
     const { id } = this;
 
     let requestData: InterfaceArticlesRequest = { page };
-    if (id) requestData.web_category = Number(id);
+    if (id) requestData.webCategoryId = id;
 
     ArticlesList(requestData).then(({ data }) => {
       this.articles = data.results || [];
