@@ -31,3 +31,18 @@ export function asyncLoad(src: string, type: 'js' | 'css' = 'js') {
     }
   });
 }
+
+/**
+ * var array = [
+    { 'dir': 'left', 'code': 97 },
+    { 'dir': 'right', 'code': 100 }
+  ];
+
+  _.keyBy(array, 'dir');
+   // => { 'left': { 'dir': 'left', 'code': 97 }, 'right': { 'dir': 'right', 'code': 100 } }
+ * @param collection
+ * @param str
+ */
+export const keyBy = (collection: Array<any>, str: string) => {
+  return collection.reduce((result, value, key) => ({ ...result, [value[str]]: value }), {});
+};

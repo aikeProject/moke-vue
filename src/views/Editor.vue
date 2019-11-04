@@ -101,6 +101,7 @@ import Markdown from '@/components/Markdown.vue';
 import { Form as ElForm } from 'element-ui';
 import { InterfaceUserInfo, InterfaceWebCategory } from '@/common/Interface';
 import { articleCreate, webCategoryList } from '@/common/Api';
+import { keyBy } from '@/utils/core';
 
 @Component({
   components: {
@@ -139,11 +140,6 @@ export default class HelloWorld extends Vue {
     webCategoryValue: [{ required: true, message: '请选择网站分类', trigger: 'change' }],
   };
 
-  @Watch('markdownValue')
-  markdownValueTest() {
-    console.log(this.markdownValue);
-  }
-
   // 组件创建完成 可在这里获取数据
   public created() {
     // 获取网站分类
@@ -178,19 +174,32 @@ export default class HelloWorld extends Vue {
         const { desc, tagsValue, category, webCategoryValue } = this.ruleForm;
         const { tagsOptions } = this;
         const web_category = webCategoryValue[webCategoryValue.length - 1] || '';
+        const tagsMap = keyBy(tagsOptions, 'id');
         const tags = tagsValue.map(tag => {
-          return {
-            id: tag,
-          };
+          // 添加已有标签
+          if (tagsMap[tag]) return { id: tag };
+          // 创建标签并添加
+          else return { title: tag };
         });
 
         articleCreate({
           title,
-          description: desc,
           tags,
-          category: category,
           web_category,
+          description: desc,
+          category: category,
           body: markdownValue,
+        }).then(() => {
+          this.$notify({
+            title: '提示',
+            dangerouslyUseHTMLString: true,
+            message: '文章发布成功',
+            type: 'success',
+            duration: 2 * 1000,
+            onClose: () => {
+              this.$router.back();
+            },
+          });
         });
       } else {
         return false;
