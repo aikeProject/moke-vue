@@ -41,6 +41,5 @@ export default class Markdown extends Vue {
 
 <style scoped lang="stylus">
 .markdown
-  min-height 100vh
   background #ffffff
 </style>

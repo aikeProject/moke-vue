@@ -3,10 +3,18 @@
     <el-row type="flex" justify="center" style="height: 100%;">
       <el-col :span="spanNo" class="hidden-xs-only">
         <el-row type="flex" justify="end" align="middle" style="height: 100%;">
-          <div v-if="userInfo.username" class="username">
-            {{ userInfo.username }}
-          </div>
-          <el-dropdown @command="handleCommand" v-if="!isLogin" trigger="click">
+          <router-link :to="{ name: 'editor' }">
+            <el-button
+              class="edit-article"
+              v-if="isLogin"
+              size="small"
+              type="primary"
+              icon="el-icon-edit"
+            >
+              写博客
+            </el-button>
+          </router-link>
+          <el-dropdown @command="handleCommand" v-if="isLogin" trigger="click">
             <el-avatar class="avatar" :src="userInfo.image" @error="errorAvatar">
               <img
                 src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
@@ -28,7 +36,7 @@
           </el-dropdown>
         </el-row>
       </el-col>
-      <el-col :span="4" class="hidden-xs-only" v-if="isLogin">
+      <el-col :span="4" class="hidden-xs-only" v-if="!isLogin">
         <el-row type="flex" justify="end">
           <router-link class="router-link" to="/login">登录</router-link>
           <router-link class="router-link" to="/register">注册</router-link>
@@ -52,7 +60,7 @@ export default class HelloWorld extends Vue {
   @Action('logOut') logOut: Function;
 
   get isLogin() {
-    return !this.userInfo.username;
+    return !!this.userInfo.username;
   }
 
   get spanNo() {
@@ -95,10 +103,9 @@ export default class HelloWorld extends Vue {
   color #657180
   font-size 14px
 
-.username
-  margin-right 10px
-  cursor pointer
-
 .avatar
   cursor pointer
+
+.edit-article
+  margin-right 10px
 </style>

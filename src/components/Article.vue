@@ -43,4 +43,8 @@ export default class HelloWorld extends Vue {}
   footer
     padding-top 20px
     border-top 1px solid #edf1f2
+
+  h4
+    margin 0
+    padding 0
 </style>

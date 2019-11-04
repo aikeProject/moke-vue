@@ -29,4 +29,8 @@ export default class HelloWorld extends Vue {}
   &__content
     color #98a6ad
     padding 0 20px
+
+h3
+  padding 0
+  margin 0
 </style>
