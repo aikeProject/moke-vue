@@ -14,8 +14,56 @@
         ref="ruleForm"
         label-width="80px"
         size="mini"
-        class="demo-ruleForm"
+        class="editor-form"
       >
+        <el-form-item label="文章标签" prop="tagsValue">
+          <el-select
+            v-model="ruleForm.tagsValue"
+            multiple
+            filterable
+            allow-create
+            default-first-option
+            placeholder="请选择文章标签"
+            value=""
+            style="width: 200px"
+          >
+            <el-option
+              v-for="item in tagsOptions"
+              :key="item.id"
+              :label="item.title"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="文章分类" prop="category">
+          <el-select
+            v-model="ruleForm.category"
+            allow-create
+            filterable
+            placeholder="请选择文章分类"
+            value=""
+            style="width: 200px"
+          >
+            <el-option
+              v-for="item in categories"
+              :key="item.id"
+              :label="item.title"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="网站分类" prop="webCategoryValue">
+          <div class="block">
+            <el-cascader
+              v-model="ruleForm.webCategoryValue"
+              :options="webCategoryOptions"
+              @change="webCategoryChange"
+              style="width: 200px"
+            ></el-cascader>
+          </div>
+        </el-form-item>
         <el-form-item label="文章描述" prop="desc">
           <el-input type="textarea" v-model="ruleForm.desc"></el-input>
         </el-form-item>
@@ -30,8 +78,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { State, Action } from 'vuex-class';
 import Markdown from '@/components/Markdown.vue';
 import { Form as ElForm } from 'element-ui';
+import { InterfaceUserInfo } from '@/common/Interface';
 
 @Component({
   components: {
@@ -39,14 +89,32 @@ import { Form as ElForm } from 'element-ui';
   },
 })
 export default class HelloWorld extends Vue {
+  @State('userInfo') userInfo: InterfaceUserInfo;
+
   public dialogVisible: boolean = false;
   public title: string = '';
+  // 网站分类
+  public webCategoryOptions = [];
+
+  get tagsOptions() {
+    return this.userInfo.blog.tags || [];
+  }
+
+  get categories() {
+    return this.userInfo.blog.categories || [];
+  }
+
   public ruleForm = {
     desc: '',
-    resource: '',
+    tagsValue: [],
+    category: '',
+    webCategoryValue: [],
   };
   public rules = {
     desc: [{ required: true, message: '请输入文章描述', trigger: 'blur' }],
+    tagsValue: [{ required: true, message: '请选择文章标签', trigger: 'change' }],
+    category: [{ required: true, message: '请选择文章个人分类', trigger: 'change' }],
+    webCategoryValue: [{ required: true, message: '请选择网站分类', trigger: 'change' }],
   };
 
   public submitForm(formName: string) {
@@ -61,6 +129,10 @@ export default class HelloWorld extends Vue {
 
   public resetForm(formName: string) {
     (this.$refs[formName] as ElForm).resetFields();
+  }
+
+  public webCategoryChange(value: any) {
+    console.log(value);
   }
 }
 </script>

@@ -4,6 +4,11 @@
  * @Description:
  */
 
+export interface InterfaceBae {
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface InterfaceRegister {
   username: string;
   password: string;
@@ -19,12 +24,6 @@ export interface InterfaceRegisterResponse {
 export interface InterfaceLogin {
   email: string;
   password: string;
-}
-
-export interface InterfaceUserInfo {
-  username: string;
-  email: string;
-  image: string;
 }
 
 export interface InterfacePagination {
@@ -84,4 +83,28 @@ export interface InterfaceWebCategory {
   updated_at: string;
   name: string;
   parent_category: number;
+}
+
+// 个人分类
+export interface InterfaceUserCategory extends InterfaceBae {
+  id: string;
+  title: string;
+  blog: string;
+}
+
+// 博客
+export interface InterfaceBlog extends InterfaceBae {
+  tags: InterfaceTag[]; // 博客标签
+  categories: InterfaceUserCategory[]; // 博客分类
+  title: string; // 博客名称
+  site_name: string; // 博客签名
+}
+
+// 用户信息
+export interface InterfaceUserInfo extends InterfaceBae {
+  uid: string;
+  username: string;
+  email: string;
+  image: string;
+  blog: InterfaceBlog;
 }

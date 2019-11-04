@@ -22,9 +22,10 @@ import {
   Pagination,
   Tag,
   Tree,
-  Radio,
-  RadioGroup,
   Dialog,
+  Select,
+  Option,
+  Cascader,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -45,9 +46,10 @@ Vue.use(DropdownItem);
 Vue.use(Pagination);
 Vue.use(Tag);
 Vue.use(Tree);
-Vue.use(Radio);
-Vue.use(RadioGroup);
 Vue.use(Dialog);
+Vue.use(Select);
+Vue.use(Option);
+Vue.use(Cascader);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;

@@ -7,10 +7,24 @@ import { Storage } from '@/common/Enum';
 
 Vue.use(Vuex);
 
+// 用户信息默认值
+const userInfoDefault: InterfaceUserInfo = {
+  username: '',
+  email: '',
+  image: '',
+  uid: '',
+  blog: {
+    tags: [],
+    categories: [],
+    title: '',
+    site_name: '',
+  },
+};
+
 let userInfo: InterfaceUserInfo = JSON.parse(localStorage.getItem(Storage.USER_INFO) || 'null');
 
 if (!userInfo) {
-  userInfo = { username: '', email: '', image: '' };
+  userInfo = userInfoDefault;
 }
 
 const state: State = {
@@ -53,7 +67,7 @@ const actions = {
     localStorage.removeItem(Storage.TOKEN);
     localStorage.removeItem(Storage.USER_INFO);
 
-    commit(Mutations.SET_USER, { username: '', email: '', image: '' });
+    commit(Mutations.SET_USER, userInfoDefault);
   },
 };
 
