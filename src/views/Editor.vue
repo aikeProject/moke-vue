@@ -59,6 +59,7 @@
             <el-cascader
               v-model="ruleForm.webCategoryValue"
               :options="webCategoryOptions"
+              :props="{ value: 'id', label: 'name', children: 'child', checkStrictly: true }"
               @change="webCategoryChange"
               style="width: 200px"
             ></el-cascader>
@@ -78,10 +79,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { State, Action } from 'vuex-class';
+import { State } from 'vuex-class';
 import Markdown from '@/components/Markdown.vue';
 import { Form as ElForm } from 'element-ui';
-import { InterfaceUserInfo } from '@/common/Interface';
+import { InterfaceUserInfo, InterfaceWebCategory } from '@/common/Interface';
+import { webCategoryList } from '@/common/Api';
 
 @Component({
   components: {
@@ -94,7 +96,7 @@ export default class HelloWorld extends Vue {
   public dialogVisible: boolean = false;
   public title: string = '';
   // 网站分类
-  public webCategoryOptions = [];
+  public webCategoryOptions: InterfaceWebCategory[] = [];
 
   get tagsOptions() {
     return this.userInfo.blog.tags || [];
@@ -116,6 +118,14 @@ export default class HelloWorld extends Vue {
     category: [{ required: true, message: '请选择文章个人分类', trigger: 'change' }],
     webCategoryValue: [{ required: true, message: '请选择网站分类', trigger: 'change' }],
   };
+
+  // 组件创建完成 可在这里获取数据
+  public created() {
+    // 获取网站分类
+    webCategoryList().then(({ data }) => {
+      this.webCategoryOptions = data || [];
+    });
+  }
 
   public submitForm(formName: string) {
     (this.$refs[formName] as ElForm).validate(valid => {
