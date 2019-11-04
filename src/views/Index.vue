@@ -36,7 +36,7 @@
         </Article>
       </div>
       <el-pagination
-        v-if="total % 10 > 1"
+        v-show="total / 10 > 1"
         background
         layout="prev, pager, next"
         :total="total"
