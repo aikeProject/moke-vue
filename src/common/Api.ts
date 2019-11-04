@@ -16,6 +16,7 @@ import {
   InterfaceCategory,
   InterfaceArticlesRequest,
   InterfaceWebCategory,
+  InterfaceArticleCreate,
 } from './Interface';
 import { AxiosRequestConfig } from 'axios';
 
@@ -68,4 +69,9 @@ export const categoryList = () => {
 // webCategory > list 网站分类
 export const webCategoryList = () => {
   return request.get<InterfaceWebCategory[]>(`${BASE}/webCategory/`);
+};
+
+// articles > create 文章创建
+export const articleCreate = (data: InterfaceArticleCreate) => {
+  return request.post(`${BASE}/articles/`, data);
 };

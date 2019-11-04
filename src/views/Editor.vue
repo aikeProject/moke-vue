@@ -39,6 +39,7 @@
                 placeholder="请选择文章标签"
                 value=""
                 style="width: 200px"
+                @change="webCategoryChange"
               >
                 <el-option
                   v-for="item in tagsOptions"
@@ -57,6 +58,7 @@
                 placeholder="请选择文章分类"
                 value=""
                 style="width: 200px"
+                @change="webCategoryChange"
               >
                 <el-option
                   v-for="item in categories"
@@ -98,7 +100,7 @@ import { State } from 'vuex-class';
 import Markdown from '@/components/Markdown.vue';
 import { Form as ElForm } from 'element-ui';
 import { InterfaceUserInfo, InterfaceWebCategory } from '@/common/Interface';
-import { webCategoryList } from '@/common/Api';
+import { articleCreate, webCategoryList } from '@/common/Api';
 
 @Component({
   components: {
@@ -152,7 +154,7 @@ export default class HelloWorld extends Vue {
 
   public submitForm(formName: string) {
     (this.$refs[formName] as ElForm).validate(valid => {
-      const { title } = this;
+      const { title, markdownValue } = this;
 
       if (!title) {
         this.$notify.error({
@@ -163,8 +165,33 @@ export default class HelloWorld extends Vue {
         return false;
       }
 
+      if (!markdownValue) {
+        this.$notify.error({
+          title: '文章内容',
+          dangerouslyUseHTMLString: true,
+          message: '请输入文章内容',
+        });
+        return false;
+      }
+
       if (valid) {
         const { desc, tagsValue, category, webCategoryValue } = this.ruleForm;
+        const { tagsOptions } = this;
+        const web_category = webCategoryValue[webCategoryValue.length - 1] || '';
+        const tags = tagsValue.map(tag => {
+          return {
+            id: tag,
+          };
+        });
+
+        articleCreate({
+          title,
+          description: desc,
+          tags,
+          category: category,
+          web_category,
+          body: markdownValue,
+        });
       } else {
         return false;
       }

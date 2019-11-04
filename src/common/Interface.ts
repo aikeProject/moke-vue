@@ -108,3 +108,13 @@ export interface InterfaceUserInfo extends InterfaceBae {
   image: string;
   blog: InterfaceBlog;
 }
+
+// 文章创建
+export interface InterfaceArticleCreate {
+  title: string;
+  description: string;
+  body: string;
+  tags: { id?: string | null; title?: string }[];
+  category: string;
+  web_category: string;
+}
