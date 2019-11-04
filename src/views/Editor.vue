@@ -19,7 +19,7 @@
             保存
           </el-button>
         </el-row>
-        <Markdown></Markdown>
+        <Markdown :value.sync="markdownValue"></Markdown>
         <el-dialog title="文章编辑" :visible.sync="dialogVisible" width="40%">
           <el-form
             :model="ruleForm"
@@ -93,7 +93,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 import Markdown from '@/components/Markdown.vue';
 import { Form as ElForm } from 'element-ui';
@@ -110,6 +110,7 @@ export default class HelloWorld extends Vue {
 
   public dialogVisible: boolean = false;
   public title: string = '';
+  public markdownValue: string = '';
   // 网站分类
   public webCategoryOptions: InterfaceWebCategory[] = [];
 
@@ -135,6 +136,11 @@ export default class HelloWorld extends Vue {
     category: [{ required: true, message: '请选择文章个人分类', trigger: 'change' }],
     webCategoryValue: [{ required: true, message: '请选择网站分类', trigger: 'change' }],
   };
+
+  @Watch('markdownValue')
+  markdownValueTest() {
+    console.log(this.markdownValue);
+  }
 
   // 组件创建完成 可在这里获取数据
   public created() {
