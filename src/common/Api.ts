@@ -41,7 +41,7 @@ export const ArticlesList = (params: InterfaceArticlesRequest) => {
   return request.get<InterfaceArticleList>(`${BASE}/articles/`, { params });
 };
 
-// 文章详情
+// 文章详情 articles > read
 export const ArticlesRead = (slug: string) => {
   return request.get<InterfaceArticle>(`${BASE}/articles/${slug}/`);
 };

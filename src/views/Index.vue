@@ -30,7 +30,12 @@
                   {{ item.updated_at }}
                 </time>
               </div>
-              <router-link class="el-link el-link--default" to="">阅读全文</router-link>
+              <router-link
+                :to="{ name: 'article', params: { slug: item.slug } }"
+                class="el-link el-link--default"
+              >
+                阅读全文
+              </router-link>
             </el-row>
           </template>
         </Article>

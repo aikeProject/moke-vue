@@ -26,6 +26,8 @@ import {
   Select,
   Option,
   Cascader,
+  Breadcrumb,
+  BreadcrumbItem,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -50,6 +52,8 @@ Vue.use(Dialog);
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Cascader);
+Vue.use(Breadcrumb);
+Vue.use(BreadcrumbItem);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;

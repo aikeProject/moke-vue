@@ -41,20 +41,20 @@ export interface InterfaceArticlesRequest extends InterfacePagination {
 }
 
 export interface InterfaceArticle {
-  author: {
+  author?: {
     email: string;
     username: string;
     image: string;
     following: boolean;
   };
-  body: string;
-  description: string;
-  created_at: string;
-  updated_at: string;
-  title: string;
-  slug: string;
-  favorite: boolean;
-  favoritesCount: string;
+  body?: string;
+  description?: string;
+  created_at?: string;
+  updated_at?: string;
+  title?: string;
+  slug?: string;
+  favorite?: boolean;
+  favoritesCount?: string;
 }
 
 export interface InterfaceArticleList {

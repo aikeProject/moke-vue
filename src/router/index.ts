@@ -10,28 +10,40 @@ const routes = [
   {
     path: '/',
     component: Home,
+    meta: { title: '首页' },
     children: [
       {
         path: '/',
         name: 'index',
+        meta: { title: '首页' },
         component: () => import(/* webpackChunkName: "Index" */ '../views/Index.vue'),
       },
       {
         path: 'index/:id?',
         name: 'webCategory',
         props: true,
+        meta: { title: '首页' },
         component: () => import(/* webpackChunkName: "Index" */ '../views/Index.vue'),
+      },
+      {
+        path: 'article/:slug',
+        name: 'article',
+        props: true,
+        meta: { title: '文章' },
+        component: () => import(/* webpackChunkName: "Article" */ '../views/Article.vue'),
       },
     ],
   },
   {
     path: '/user/:uid',
     props: true,
+    meta: { title: '个人主页' },
     component: () => import(/* webpackChunkName: "PersonalHome" */ '../views/PersonalHome.vue'),
     children: [
       {
         path: 'home',
         name: 'user',
+        meta: { title: '个人主页' },
         component: () =>
           import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
       },
@@ -39,6 +51,7 @@ const routes = [
         path: 'home/:name/:id?',
         name: 'userCategoryTag',
         props: true,
+        meta: { title: '个人主页' },
         component: () =>
           import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
       },
@@ -47,16 +60,19 @@ const routes = [
   {
     path: '/editor',
     name: 'editor',
+    meta: { title: '文章编辑' },
     component: () => import(/* webpackChunkName: "editor" */ '../views/Editor.vue'),
   },
   {
     path: '/login',
     name: 'login',
+    meta: { title: '登录' },
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
   },
   {
     path: '/register',
     name: 'register',
+    meta: { title: '注册' },
     component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
   },
   {
