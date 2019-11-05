@@ -12,7 +12,13 @@
         <Article class="article--margin">
           <template v-slot:title>
             <div class="article-title">
-              {{ item.title }}
+              <router-link
+                :to="{ name: 'article', params: { slug: item.slug } }"
+                class="el-link el-link--default"
+                style="font-size: 22px"
+              >
+                {{ item.title }}
+              </router-link>
             </div>
           </template>
           {{ item.description }}
