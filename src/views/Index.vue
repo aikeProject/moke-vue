@@ -13,22 +13,23 @@
           <template v-slot:title>
             <div class="article-title">
               {{ item.title }}
-              <i
-                v-if="item.favorite"
-                @click="favoriteDelete(item.slug)"
-                class="el-icon-star-on favorite favorite--success"
-              ></i>
-              <i v-else @click="favorite(item.slug)" class="el-icon-star-off favorite"></i>
             </div>
           </template>
           {{ item.description }}
           <template v-slot:footer>
             <el-row type="flex" align="middle" justify="space-between">
-              <div>
+              <div class="article-footer">
                 <time>
                   <i style="padding-right: 5px;" class="el-icon-time"></i>
                   {{ item.updated_at }}
                 </time>
+                <i
+                  v-if="item.favorite"
+                  @click="favoriteDelete(item.slug)"
+                  class="el-icon-star-on favorite favorite--success"
+                ></i>
+                <i v-else @click="favorite(item.slug)" class="el-icon-star-off favorite"></i>
+                {{ item.favoritesCount }}
               </div>
               <router-link
                 :to="{ name: 'article', params: { slug: item.slug } }"
@@ -197,15 +198,18 @@ time
 .article-title
   position relative
 
+.article-footer
+  font-size 12px
+  color #98a6ad
+
 .favorite
-  position absolute
-  top 0
-  right 0
-  font-size 20px
+  font-size 14px
+  margin-left 10px
+  color #98a6ad
 
   &.favorite--success
     color #393d49
-    font-size 22px
+    font-size 14px
 
 .category-list
   padding 10px
