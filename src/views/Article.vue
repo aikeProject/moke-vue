@@ -56,6 +56,11 @@ export default class HelloWorld extends Vue {
     });
   }
 
+  public beforeRouteLeave(to: any, from: any, next: any) {
+    to.meta.keepAlive = true;
+    next();
+  }
+
   public errorAvatar(): boolean {
     return true;
   }

@@ -15,14 +15,14 @@ const routes = [
       {
         path: '/',
         name: 'index',
-        meta: { title: '首页' },
+        meta: { title: '首页', keepAlive: true },
         component: () => import(/* webpackChunkName: "Index" */ '../views/Index.vue'),
       },
       {
-        path: 'index/:id?',
+        path: 'index/:page/:id?',
         name: 'webCategory',
         props: true,
-        meta: { title: '首页' },
+        meta: { title: '首页', keepAlive: true },
         component: () => import(/* webpackChunkName: "Index" */ '../views/Index.vue'),
       },
       {
@@ -83,7 +83,16 @@ const routes = [
   },
 ];
 
-const router = new VueRouter({ routes });
+const router = new VueRouter({
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  },
+});
 
 router.beforeEach((to, from, next) => {
   // Token 过期 清除存在本地的用户信息

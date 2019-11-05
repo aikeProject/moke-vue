@@ -107,13 +107,19 @@ export default class HelloWorld extends Vue {
 
   public articles: InterfaceArticle[] = [];
   public total: number = 0;
-  public currentPage: number = 0;
+  public currentPage: number = 1;
   public defaultTreeProps: any = { children: 'child', label: 'name' };
   public treeCategory: InterfaceWebCategory[] = [];
 
   @Watch('currentPage')
   public onChildChanged(page: number, oldVal: number) {
-    this.articleList(page);
+    const params: { page: string; id?: any } = { page: page + '' };
+    if (this.id) params.id = this.id || '';
+
+    this.$router.push({
+      name: 'webCategory',
+      params,
+    });
   }
 
   // 监听路由变化
@@ -173,7 +179,7 @@ export default class HelloWorld extends Vue {
   public nodeClick({ id }: InterfaceWebCategory) {
     this.$router.push({
       name: 'webCategory',
-      params: { id: id.toString() },
+      params: { id: id.toString(), page: '1' },
     });
   }
 }
