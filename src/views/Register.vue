@@ -67,7 +67,7 @@ export default class Register extends Vue {
         const { ruleForm } = this;
 
         this.register(ruleForm).then(() => {
-          this.$router.push('/');
+          this.$router.push({ name: 'index' });
         });
       } else {
         return false;
