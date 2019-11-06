@@ -103,6 +103,7 @@ router.beforeEach((to, from, next) => {
       },
       () => {
         localStorage.removeItem(Storage.USER_INFO);
+        localStorage.removeItem(Storage.TOKEN);
       }
     );
   }

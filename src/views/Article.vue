@@ -15,23 +15,28 @@
       </section>
       <h1>{{ articleDetailComputed.title }}</h1>
       <main v-html="articleDetailComputed.body"></main>
+      <section>
+        <WangEditor></WangEditor>
+      </section>
+      <article></article>
     </article>
   </el-main>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import showdown from 'showdown';
 import { ArticlesRead } from '@/common/Api';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 import { InterfaceArticle } from '@/common/Interface';
 import Article from '@/components/Article.vue';
-import showdown from 'showdown';
+import WangEditor from '@/components/WangEditor.vue';
 
 const converter = new showdown.Converter();
 converter.setFlavor('github');
 
 @Component({
-  components: { Article, Breadcrumb },
+  components: { Article, Breadcrumb, WangEditor },
 })
 export default class HelloWorld extends Vue {
   @Prop({ default: '' }) private slug: string;

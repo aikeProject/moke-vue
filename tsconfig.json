@@ -20,5 +20,5 @@
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
   "exclude": ["node_modules"],
-  "files": ["src/types/axios-utils.d.ts"]
+  "files": ["src/types/axios-utils.d.ts", "src/types/wangeditor.d.ts"]
 }
