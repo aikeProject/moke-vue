@@ -41,7 +41,7 @@ converter.setFlavor('github');
 export default class HelloWorld extends Vue {
   @Prop({ default: '' }) private slug: string;
   public articleDetail: InterfaceArticle = {};
-  public value: string = '<div>实话实爱好客户</div>';
+  public value: string = '';
 
   get articleDetailComputed() {
     return {
@@ -71,7 +71,7 @@ export default class HelloWorld extends Vue {
     return true;
   }
 
-  public editorChange(data) {
+  public editorChange(data: any) {
     console.log(data);
   }
 }

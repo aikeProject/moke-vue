@@ -5,6 +5,7 @@
 <script lang="ts">
 import { Component, PropSync, Vue, Ref, Emit } from 'vue-property-decorator';
 import E from 'wangeditor';
+import XSS from 'xss';
 
 @Component
 export default class HelloWorld extends Vue {
@@ -45,9 +46,10 @@ export default class HelloWorld extends Vue {
 
     // html 即变化之后的内容
     editor.customConfig.onchange = html => {
-      this.syncedBody = html;
+      // @ts-ignore
+      this.syncedBody = XSS(html);
+      console.log(this.syncedBody);
       this.onChange();
-      console.log('----');
     };
 
     editor.create();
