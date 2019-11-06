@@ -15,7 +15,8 @@
       </section>
       <h1>{{ articleDetailComputed.title }}</h1>
       <main v-html="articleDetailComputed.body"></main>
-      <section>
+      <section style="padding: 20px 0 40px 0;">
+        <div class="comments">评论</div>
         <WangEditor :body.sync="value" @on-change="editorChange"></WangEditor>
       </section>
       <article></article>
@@ -95,4 +96,10 @@ export default class HelloWorld extends Vue {
     color #393d49
   time
     color #98a6ad
+
+.comments
+  color #8a9aa9
+  font-size 20px
+  font-weight 500
+  padding 10px 0
 </style>

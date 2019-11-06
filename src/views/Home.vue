@@ -6,7 +6,6 @@
         :xl="{ span: 18, offset: 3 }"
         :lg="{ span: 18, offset: 3 }"
         :md="{ span: 18, offset: 3 }"
-        :sm="{ span: 18, offset: 3 }"
       >
         <el-container class="is-vertical home-container">
           <Header></Header>
