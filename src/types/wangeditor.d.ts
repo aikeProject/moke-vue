@@ -6,7 +6,13 @@
 
 declare module 'wangeditor' {
   export interface InterfaceTxt {
-    html(str: any): void;
+    html(str?: any): string;
+    text(): string;
+  }
+
+  export interface InterfaceCustomConfig {
+    menus: string[];
+    onchange(html: any): void;
   }
 
   export default class Editor {
@@ -14,5 +20,6 @@ declare module 'wangeditor' {
 
     create(): void;
     txt: InterfaceTxt;
+    customConfig: InterfaceCustomConfig;
   }
 }

@@ -16,7 +16,7 @@
       <h1>{{ articleDetailComputed.title }}</h1>
       <main v-html="articleDetailComputed.body"></main>
       <section>
-        <WangEditor></WangEditor>
+        <WangEditor :body.sync="value" @on-change="editorChange"></WangEditor>
       </section>
       <article></article>
     </article>
@@ -41,6 +41,7 @@ converter.setFlavor('github');
 export default class HelloWorld extends Vue {
   @Prop({ default: '' }) private slug: string;
   public articleDetail: InterfaceArticle = {};
+  public value: string = '<div>实话实爱好客户</div>';
 
   get articleDetailComputed() {
     return {
@@ -68,6 +69,10 @@ export default class HelloWorld extends Vue {
 
   public errorAvatar(): boolean {
     return true;
+  }
+
+  public editorChange(data) {
+    console.log(data);
   }
 }
 </script>
