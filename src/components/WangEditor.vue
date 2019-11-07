@@ -62,10 +62,16 @@ export default class HelloWorld extends Vue {
 
 <style lang="stylus">
 .wang-editor
-  border 1px solid #f3f6fa
   box-sizing border-box
   border-radius 5px
   .w-e-text-container
     height 150px!important
     padding 10px
+    border solid 1px #dce6f0 !important
+    border-top none !important
+  .w-e-toolbar
+    border solid 1px #dce6f0 !important
+    background #f3f6fa!important
+    display flex
+    flex-wrap wrap
 </style>
