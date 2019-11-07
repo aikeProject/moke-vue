@@ -20,7 +20,11 @@
         <WangEditor :body.sync="value" @on-change="editorChange"></WangEditor>
       </section>
       <Comment v-for="item in comments" :key="item.id" :comment="item"></Comment>
-      <p @click="lodaMore" class="comments-more">加载更多</p>
+      <p v-if="isMore" @click="lodaMore" class="comments-more">加载更多</p>
+      <p v-if="isLoading" class="comments-more">
+        <i style="margin-right: 5px;" class="el-icon-loading"></i>
+        加载中...
+      </p>
     </article>
     <!--    <p>加载中...</p>-->
     <!--    <p>没有更多了</p>-->
@@ -48,11 +52,21 @@ export default class HelloWorld extends Vue {
   public articleDetail: InterfaceArticle = {};
   public value: string = '';
   public comments: InterfaceCommentsResponse[] = [];
+  public count: number = 0;
   public page: number = 1;
+  public isLoading: boolean = false;
 
   @Watch('page')
   pageChange() {
     this.commentsList();
+  }
+
+  get isMore() {
+    return this.count > 10 && !this.isLoading && !this.isNoMore;
+  }
+
+  get isNoMore() {
+    return this.count < this.page * 10;
   }
 
   get articleDetailComputed() {
@@ -76,13 +90,21 @@ export default class HelloWorld extends Vue {
   }
 
   public commentsList() {
+    this.isLoading = true;
+
     commentsList({
       article_slug: this.slug,
       page: this.page || 1,
-    }).then(({ data }) => {
-      const { results } = data;
-      this.comments = [...this.comments, ...(results || [])];
-    });
+    })
+      .then(({ data }) => {
+        const { results, count } = data;
+        this.comments = [...this.comments, ...(results || [])];
+        this.count = count;
+        this.isLoading = false;
+      })
+      .catch(() => {
+        this.isLoading = false;
+      });
   }
 
   public beforeRouteLeave(to: any, from: any, next: any) {
