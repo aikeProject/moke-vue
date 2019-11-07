@@ -18,9 +18,18 @@
       <section style="padding: 20px 0;">
         <div class="comments">评论</div>
         <WangEditor :body.sync="value" @on-change="editorChange"></WangEditor>
+        <el-button
+          @click="commentEdit"
+          icon="el-icon-edit"
+          style="margin-top: 20px;"
+          type="primary"
+          size="small"
+        >
+          评论
+        </el-button>
       </section>
       <Comment v-for="item in comments" :key="item.id" :comment="item"></Comment>
-      <p v-if="isMore" @click="lodaMore" class="comments-more">加载更多</p>
+      <p v-if="isMore" @click="loadMore" class="comments-more">加载更多</p>
       <p v-if="isLoading" class="comments-more">
         <i style="margin-right: 5px;" class="el-icon-loading"></i>
         加载中...
@@ -34,7 +43,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import showdown from 'showdown';
-import { ArticlesRead, commentsList } from '@/common/Api';
+import { ArticlesRead, commentsList, commentCreate } from '@/common/Api';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 import { InterfaceArticle, InterfaceCommentsResponse } from '@/common/Interface';
 import Article from '@/components/Article.vue';
@@ -120,7 +129,23 @@ export default class HelloWorld extends Vue {
     console.log(data);
   }
 
-  public lodaMore() {
+  public commentEdit(reply: string) {
+    console.log('reply', reply);
+    const { value, slug } = this;
+    commentCreate({ body: value, article: slug }).then(() => {
+      this.$notify.error({
+        title: '评论',
+        type: 'success',
+        dangerouslyUseHTMLString: true,
+        message: '评论成功',
+      });
+
+      this.comments = [];
+      this.commentsList();
+    });
+  }
+
+  public loadMore() {
     this.page += 1;
   }
 }
