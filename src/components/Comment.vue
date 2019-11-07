@@ -6,7 +6,10 @@
       </el-avatar>
       <div class="comment-right">
         <p class="comment-author">
-          {{ (comment.author || {}).username }} <time>{{ comment.created_at }}</time>
+          {{ (comment.author || {}).username }}
+          {{ comment.is_own ? ' (作者) ' : '' }}
+          <time>{{ comment.created_at }}</time>
+          <el-link style="color: #567482;">回复</el-link>
         </p>
         <div class="comment-body" v-html="comment.body"></div>
       </div>
@@ -40,21 +43,25 @@ export default class Comment extends Vue {
 .comments-item
   display flex
   margin 5px 0
+  background-color #f3f6fa
+  border solid 1px #dce6f0
+  border-radius 5px
+  padding 10px 10px 0 5px
   .comment-right
-    margin-left 5px
+    margin-left 10px
   .comment-author
+    font-weight 500
     color #567482
     font-size 13px
     padding 5px 0
     margin 0
     > time
       color #98A6B4
+      padding 0 10px
   .comment-body
     color #567482
     padding 5px 10px 10px 0
 
 .comment-child
   padding-left 20px
-  .comment-child--background
-    background-color #f3f6fa
 </style>

@@ -144,3 +144,10 @@ export interface InterfaceCommentsResponse extends InterfaceBae {
   article: number;
   parent: number;
 }
+
+export interface InterfaceCommentReqest {
+  body: string;
+  article: string;
+  reply?: string;
+  parent?: string;
+}

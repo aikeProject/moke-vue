@@ -20,13 +20,15 @@
         <WangEditor :body.sync="value" @on-change="editorChange"></WangEditor>
       </section>
       <Comment v-for="item in comments" :key="item.id" :comment="item"></Comment>
-      <div style="height: 50px;"></div>
+      <p @click="lodaMore" class="comments-more">加载更多</p>
     </article>
+    <!--    <p>加载中...</p>-->
+    <!--    <p>没有更多了</p>-->
   </el-main>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import showdown from 'showdown';
 import { ArticlesRead, commentsList } from '@/common/Api';
 import Breadcrumb from '@/components/Breadcrumb.vue';
@@ -46,6 +48,12 @@ export default class HelloWorld extends Vue {
   public articleDetail: InterfaceArticle = {};
   public value: string = '';
   public comments: InterfaceCommentsResponse[] = [];
+  public page: number = 1;
+
+  @Watch('page')
+  pageChange() {
+    this.commentsList();
+  }
 
   get articleDetailComputed() {
     return {
@@ -64,9 +72,16 @@ export default class HelloWorld extends Vue {
     ArticlesRead(this.slug).then(({ data }) => {
       this.articleDetail = data;
     });
-    commentsList({ article_slug: this.slug }).then(({ data }) => {
+    this.commentsList();
+  }
+
+  public commentsList() {
+    commentsList({
+      article_slug: this.slug,
+      page: this.page || 1,
+    }).then(({ data }) => {
       const { results } = data;
-      this.comments = results || [];
+      this.comments = [...this.comments, ...(results || [])];
     });
   }
 
@@ -81,6 +96,10 @@ export default class HelloWorld extends Vue {
 
   public editorChange(data: any) {
     console.log(data);
+  }
+
+  public lodaMore() {
+    this.page += 1;
   }
 }
 </script>
@@ -109,4 +128,9 @@ export default class HelloWorld extends Vue {
   font-size 20px
   font-weight 500
   padding 10px 0
+
+.comments-more
+  text-align center
+  color #567482
+  cursor pointer
 </style>

@@ -20,6 +20,7 @@ import {
   InterfaceCommentsRequest,
   InterfaceCommentsResponse,
   InterfacePaginationBase,
+  InterfaceCommentReqest,
 } from './Interface';
 import { AxiosRequestConfig } from 'axios';
 
@@ -84,4 +85,9 @@ export const commentsList = (data: InterfaceCommentsRequest = { article_slug: ''
   return request.get<InterfacePaginationBase<InterfaceCommentsResponse[]>>(`${BASE}/comments/`, {
     params: data || {},
   });
+};
+
+// comment > create 评论
+export const commentCreate = (data: InterfaceCommentReqest) => {
+  return request.post(`${BASE}/comment/`, data);
 };
