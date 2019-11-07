@@ -55,7 +55,7 @@ import ElAvatar from 'element-ui/packages/avatar/src/main.vue';
 @Component({
   components: { ElAvatar },
 })
-export default class HelloWorld extends Vue {
+export default class Header extends Vue {
   @State('userInfo') userInfo: InterfaceUserInfo;
   @Action('logOut') logOut: Function;
 

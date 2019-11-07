@@ -4,7 +4,7 @@
     <article class="article-main">
       <section>
         <el-row type="flex">
-          <el-avatar class="avatar" :src="authorComputed.image" @error="errorAvatar">
+          <el-avatar :src="authorComputed.image" @error="errorAvatar">
             <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" alt="" />
           </el-avatar>
           <div class="user-info">
@@ -15,11 +15,12 @@
       </section>
       <h1>{{ articleDetailComputed.title }}</h1>
       <main v-html="articleDetailComputed.body"></main>
-      <section style="padding: 20px 0 40px 0;">
+      <section style="padding: 20px 0;">
         <div class="comments">评论</div>
         <WangEditor :body.sync="value" @on-change="editorChange"></WangEditor>
       </section>
-      <article></article>
+      <Comment v-for="item in comments" :key="item.id" :comment="item"></Comment>
+      <div style="height: 50px;"></div>
     </article>
   </el-main>
 </template>
@@ -27,22 +28,24 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import showdown from 'showdown';
-import { ArticlesRead } from '@/common/Api';
+import { ArticlesRead, commentsList } from '@/common/Api';
 import Breadcrumb from '@/components/Breadcrumb.vue';
-import { InterfaceArticle } from '@/common/Interface';
+import { InterfaceArticle, InterfaceCommentsResponse } from '@/common/Interface';
 import Article from '@/components/Article.vue';
 import WangEditor from '@/components/WangEditor.vue';
+import Comment from '@/components/Comment.vue';
 
 const converter = new showdown.Converter();
 converter.setFlavor('github');
 
 @Component({
-  components: { Article, Breadcrumb, WangEditor },
+  components: { Article, Breadcrumb, WangEditor, Comment },
 })
 export default class HelloWorld extends Vue {
   @Prop({ default: '' }) private slug: string;
   public articleDetail: InterfaceArticle = {};
   public value: string = '';
+  public comments: InterfaceCommentsResponse[] = [];
 
   get articleDetailComputed() {
     return {
@@ -60,6 +63,10 @@ export default class HelloWorld extends Vue {
   public created() {
     ArticlesRead(this.slug).then(({ data }) => {
       this.articleDetail = data;
+    });
+    commentsList({ article_slug: this.slug }).then(({ data }) => {
+      const { results } = data;
+      this.comments = results || [];
     });
   }
 

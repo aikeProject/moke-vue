@@ -27,8 +27,15 @@ export interface InterfaceLogin {
 }
 
 export interface InterfacePagination {
-  page: number;
+  page?: number;
   page_size?: number;
+}
+
+export interface InterfacePaginationBase<T = any> {
+  count: number;
+  next: string;
+  previous: string;
+  results: T;
 }
 
 export interface InterfaceArticlesRequest extends InterfacePagination {
@@ -117,4 +124,23 @@ export interface InterfaceArticleCreate {
   tags: { id?: string | null; title?: string }[];
   category: string;
   web_category: string;
+}
+
+// 评论
+export interface InterfaceCommentsRequest extends InterfacePagination {
+  article_slug: string;
+}
+
+export interface InterfaceCommentsResponse extends InterfaceBae {
+  id: string;
+  author: {
+    uid: string;
+    username: string;
+    image: string;
+  };
+  child: InterfaceCommentsResponse[];
+  is_own: boolean;
+  body: string;
+  article: number;
+  parent: number;
 }

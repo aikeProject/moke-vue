@@ -17,6 +17,9 @@ import {
   InterfaceArticlesRequest,
   InterfaceWebCategory,
   InterfaceArticleCreate,
+  InterfaceCommentsRequest,
+  InterfaceCommentsResponse,
+  InterfacePaginationBase,
 } from './Interface';
 import { AxiosRequestConfig } from 'axios';
 
@@ -74,4 +77,11 @@ export const webCategoryList = () => {
 // articles > create 文章创建
 export const articleCreate = (data: InterfaceArticleCreate) => {
   return request.post(`${BASE}/articles/`, data);
+};
+
+// comments > list 文章相关评论
+export const commentsList = (data: InterfaceCommentsRequest = { article_slug: '' }) => {
+  return request.get<InterfacePaginationBase<InterfaceCommentsResponse[]>>(`${BASE}/comments/`, {
+    params: data || {},
+  });
 };

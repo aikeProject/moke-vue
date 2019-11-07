@@ -8,7 +8,7 @@ import E from 'wangeditor';
 import XSS from 'xss';
 
 @Component
-export default class HelloWorld extends Vue {
+export default class WangEditor extends Vue {
   @PropSync('body', { type: String }) private syncedBody: string;
   @Ref('wangEditor') readonly wangEditor!: HTMLDivElement;
   public editor: E;
@@ -48,7 +48,6 @@ export default class HelloWorld extends Vue {
     editor.customConfig.onchange = html => {
       // @ts-ignore
       this.syncedBody = XSS(html);
-      console.log(this.syncedBody);
       this.onChange();
     };
 
@@ -69,6 +68,7 @@ export default class HelloWorld extends Vue {
     padding 10px
     border solid 1px #dce6f0 !important
     border-top none !important
+    z-index 99 !important
   .w-e-toolbar
     border solid 1px #dce6f0 !important
     background #f3f6fa!important
