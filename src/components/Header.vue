@@ -92,7 +92,7 @@ export default class Header extends Vue {
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 99;
+  z-index: 100;
   box-shadow 0 2px 2px rgba(0, 0, 0, .05), 0 1px 0 rgba(0, 0, 0, .05)
   background #fff
 

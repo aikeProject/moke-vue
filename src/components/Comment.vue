@@ -1,15 +1,25 @@
 <template>
-  <article class="comments-item">
-    <el-avatar :src="(comment.author || {}).image" @error="errorAvatar">
-      <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" alt="" />
-    </el-avatar>
-    <div class="comment-right">
-      <p class="comment-author">
-        {{ (comment.author || {}).username }} <time>{{ comment.created_at }}</time>
-      </p>
-      <div class="comment-body" v-html="comment.body"></div>
+  <section>
+    <article class="comments-item">
+      <el-avatar :src="(comment.author || {}).image" @error="errorAvatar">
+        <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" alt="" />
+      </el-avatar>
+      <div class="comment-right">
+        <p class="comment-author">
+          {{ (comment.author || {}).username }} <time>{{ comment.created_at }}</time>
+        </p>
+        <div class="comment-body" v-html="comment.body"></div>
+      </div>
+    </article>
+    <div class="comment-child">
+      <Comment
+        class="comment-child--background"
+        v-for="item in comment.child"
+        :key="item.id"
+        :comment="item"
+      ></Comment>
     </div>
-  </article>
+  </section>
 </template>
 
 <script lang="ts">
@@ -42,4 +52,9 @@ export default class Comment extends Vue {
   .comment-body
     color #567482
     padding 5px 10px 10px 0
+
+.comment-child
+  padding-left 20px
+  .comment-child--background
+    background-color #f3f6fa
 </style>
