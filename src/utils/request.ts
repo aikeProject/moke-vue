@@ -7,6 +7,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { merge } from 'axios/lib/utils';
 import { Notification } from 'element-ui';
 import { Storage } from '@/common/Enum';
+import { isArray, isObject } from '@/utils/core';
 
 export interface InterfaceRequestConfig {
   error: boolean;
@@ -33,11 +34,11 @@ function mergeError(data: any, result: string[] = []): any {
     result.push(error);
   }
 
-  if (Object.prototype.toString.call(data) === '[object Array]') {
+  if (isArray(data)) {
     (data as Array<string>).map(str => result.push(`<div>${str}</div>`));
   }
 
-  if (Object.prototype.toString.call(data) === '[object Object]') {
+  if (isObject(data)) {
     Object.values(data).map(item => {
       mergeError(item, result);
     });

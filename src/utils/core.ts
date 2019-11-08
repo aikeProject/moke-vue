@@ -4,6 +4,8 @@
  * @Description:
  */
 
+const toString = Object.prototype.toString;
+
 export function asyncLoad(src: string, type: 'js' | 'css' = 'js') {
   return new Promise((resolve, reject) => {
     if (type === 'css') {
@@ -43,6 +45,35 @@ export function asyncLoad(src: string, type: 'js' | 'css' = 'js') {
  * @param collection
  * @param str
  */
-export const keyBy = (collection: Array<any>, str: string) => {
+const keyBy = (collection: Array<any>, str: string) => {
   return collection.reduce((result, value, key) => ({ ...result, [value[str]]: value }), {});
 };
+
+/**
+ * 是否是数组
+ * @param val {Object}
+ * @returns {boolean}
+ */
+function isArray(val: any): boolean {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * 是否是对象
+ * @param val {Object}
+ * @returns {boolean}
+ */
+function isObject(val: any): boolean {
+  return toString.call(val) === '[object Object]';
+}
+
+/**
+ * 字符串去空格
+ * @param str {String}
+ * @returns {String}
+ */
+function trim(str: string): string {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+export { keyBy, isArray, isObject, trim };
