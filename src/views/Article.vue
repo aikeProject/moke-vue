@@ -185,6 +185,7 @@ export default class HelloWorld extends Vue {
       });
 
       this.comments = [];
+      this.page = 1;
       this.commentsList();
       this.dialogVisible = false;
     });
@@ -218,6 +219,7 @@ export default class HelloWorld extends Vue {
         duration: 1000,
         onClose: () => {
           this.comments = [];
+          this.page = 1;
           this.commentsList();
         },
       });

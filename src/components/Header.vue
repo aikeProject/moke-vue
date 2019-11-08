@@ -73,7 +73,9 @@ export default class Header extends Vue {
 
   public handleCommand(command: 'info' | 'out'): void {
     if (command === 'info') {
-      // do something
+      const { uid } = this.userInfo;
+
+      this.$router.push({ name: 'user', params: { uid: uid } });
     }
 
     if (command === 'out') {

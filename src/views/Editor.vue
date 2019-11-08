@@ -5,7 +5,6 @@
       :xl="{ span: 18, offset: 3 }"
       :lg="{ span: 18, offset: 3 }"
       :md="{ span: 18, offset: 3 }"
-      :sm="{ span: 18, offset: 3 }"
     >
       <div class="editor">
         <el-row class="editor-top" type="flex" align="middle" justify="space-between">

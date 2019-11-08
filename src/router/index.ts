@@ -43,6 +43,7 @@ const routes = [
       {
         path: 'home',
         name: 'user',
+        props: true,
         meta: { title: '个人主页' },
         component: () =>
           import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
@@ -53,7 +54,7 @@ const routes = [
         props: true,
         meta: { title: '个人主页' },
         component: () =>
-          import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
+          import(/* webpackChunkName: "userCategoryTag" */ '../views/PersonalIndex.vue'),
       },
     ],
   },

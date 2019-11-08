@@ -13,12 +13,6 @@
           <template v-slot:title>
             <div class="article-title">
               {{ item.title }}
-              <i
-                v-if="item.favorite"
-                @click="favoriteDelete(item.slug)"
-                class="el-icon-star-on favorite favorite--success"
-              ></i>
-              <i v-else @click="favorite(item.slug)" class="el-icon-star-off favorite"></i>
             </div>
           </template>
           {{ item.description }}
@@ -29,6 +23,7 @@
                   <i style="padding-right: 5px;" class="el-icon-time"></i>
                   {{ item.updated_at }}
                 </time>
+                <i class="el-icon-star-on favorite">&nbsp;&nbsp;{{ item.favoritesCount }}</i>
               </div>
               <router-link class="el-link el-link--default" to="">阅读全文</router-link>
             </el-row>
@@ -96,13 +91,7 @@ import {
   InterfaceCategory,
   InterfaceArticlesRequest,
 } from '@/common/Interface';
-import {
-  articleFavoriteCreate,
-  articleFavoriteDelete,
-  ArticlesList,
-  categoryList,
-  tagList,
-} from '@/common/Api';
+import { ArticlesList, categoryList, tagList } from '@/common/Api';
 
 @Component({
   components: {
@@ -172,30 +161,6 @@ export default class HelloWorld extends Vue {
       this.categorys = data || [];
     });
   }
-
-  /**
-   * 收藏
-   * @param article_slug
-   */
-  public favorite(article_slug: string) {
-    articleFavoriteCreate(article_slug).then(() => {
-      const { currentPage: page } = this;
-
-      this.articleList(page);
-    });
-  }
-
-  /**
-   * 取消搜藏
-   * @param article_slug
-   */
-  public favoriteDelete(article_slug: string) {
-    articleFavoriteDelete(article_slug).then(() => {
-      const { currentPage: page } = this;
-
-      this.articleList(page);
-    });
-  }
 }
 </script>
 
@@ -228,22 +193,13 @@ export default class HelloWorld extends Vue {
 .article--margin
   margin-bottom 20px
 
-time
+time, .favorite
   color #98a6ad
   font-size 12px
 
 .article-title
   position relative
 
-.favorite
-  position absolute
-  top 0
-  right 0
-  font-size 20px
-
-  &.favorite--success
-    color #393d49
-    font-size 22px
 
 .tag-list
   padding 10px

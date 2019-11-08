@@ -43,7 +43,7 @@ const actions = {
   async register({ commit, dispatch }: ActionContext<State, State>, request: InterfaceRegister) {
     const { data } = await RegisterApi(request);
     if (data.token) {
-      localStorage.setItem('Token', data.token);
+      localStorage.setItem(Storage.TOKEN, data.token);
       await dispatch('userInfo', data);
     }
   },
