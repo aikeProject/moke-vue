@@ -14,10 +14,10 @@ export default class WangEditor extends Vue {
   public editor: E;
 
   @Emit()
-  onChange() {
+  onChange(body: string) {
     return {
       editor: this.editor,
-      body: this.syncedBody,
+      body: body,
       text: this.editor.txt.text(),
     };
   }
@@ -47,8 +47,9 @@ export default class WangEditor extends Vue {
     // html 即变化之后的内容
     editor.customConfig.onchange = html => {
       // @ts-ignore
-      this.syncedBody = XSS(html);
-      this.onChange();
+      const xssBody = XSS(html);
+      this.syncedBody = xssBody;
+      this.onChange(xssBody);
     };
 
     editor.create();
