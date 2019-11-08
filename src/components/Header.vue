@@ -2,38 +2,47 @@
   <el-header class="header" style="height: 52px;">
     <el-row type="flex" justify="center" style="height: 100%;">
       <el-col :span="spanNo" class="hidden-xs-only">
-        <el-row type="flex" justify="end" align="middle" style="height: 100%;">
-          <router-link :to="{ name: 'editor' }">
-            <el-button
-              class="edit-article"
-              v-if="isLogin"
-              size="small"
-              type="primary"
-              icon="el-icon-edit"
-            >
-              写博客
-            </el-button>
+        <el-row type="flex" justify="space-between" align="middle" style="height: 100%;">
+          <router-link to="/">
+            <i class="el-icon-ice-cream-round logo">&nbsp;&nbsp;moke</i>
           </router-link>
-          <el-dropdown @command="handleCommand" v-if="isLogin" trigger="click">
-            <el-avatar class="avatar" :src="userInfo.image" @error="errorAvatar">
-              <img
-                src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
-                alt=""
-              />
-            </el-avatar>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="info" style="font-size: 16px;" icon="el-icon-edit-outline">
-                个人信息
-              </el-dropdown-item>
-              <el-dropdown-item
-                command="out"
-                style="font-size: 16px;"
-                icon="el-icon-ice-cream-round"
+          <el-row type="flex" align="middle">
+            <router-link :to="{ name: 'editor' }">
+              <el-button
+                class="edit-article"
+                v-if="isLogin"
+                size="small"
+                type="primary"
+                icon="el-icon-edit"
               >
-                退出
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+                写博客
+              </el-button>
+            </router-link>
+            <el-dropdown @command="handleCommand" v-if="isLogin" trigger="click">
+              <el-avatar class="avatar" :src="userInfo.image" @error="errorAvatar">
+                <img
+                  src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+                  alt=""
+                />
+              </el-avatar>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  command="info"
+                  style="font-size: 16px;"
+                  icon="el-icon-edit-outline"
+                >
+                  个人信息
+                </el-dropdown-item>
+                <el-dropdown-item
+                  command="out"
+                  style="font-size: 16px;"
+                  icon="el-icon-ice-cream-round"
+                >
+                  退出
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-row>
         </el-row>
       </el-col>
       <el-col :span="4" class="hidden-xs-only" v-if="!isLogin">
@@ -87,7 +96,6 @@ export default class Header extends Vue {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
 .header
   height: 52px;
@@ -110,4 +118,9 @@ export default class Header extends Vue {
 
 .edit-article
   margin-right 10px
+
+.logo
+  font-size: 20px;
+  font-style: italic;
+  color #606266
 </style>
