@@ -9,13 +9,14 @@
           {{ (comment.author || {}).username }}
           {{ comment.is_own ? ' (作者) ' : '' }}
           <time>{{ comment.created_at }}</time>
-          <el-link style="color: #567482;">回复</el-link>
+          <el-link @click="onReply(comment)" style="color: #567482;">回复</el-link>
         </p>
         <div class="comment-body" v-html="comment.body"></div>
       </div>
     </article>
     <div class="comment-child">
       <Comment
+        @on-reply="onReply"
         class="comment-child--background"
         v-for="item in comment.child"
         :key="item.id"
@@ -26,12 +27,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 import { InterfaceCommentsResponse } from '@/common/Interface';
 
 @Component
 export default class Comment extends Vue {
   @Prop({ default: {} }) private comment: InterfaceCommentsResponse;
+
+  @Emit()
+  onReply(comment: InterfaceCommentsResponse): InterfaceCommentsResponse {
+    return comment;
+  }
 
   public errorAvatar(): boolean {
     return true;

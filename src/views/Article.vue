@@ -28,15 +28,31 @@
           评论
         </el-button>
       </section>
-      <Comment v-for="item in comments" :key="item.id" :comment="item"></Comment>
+      <Comment
+        @on-reply="commentReply"
+        v-for="item in comments"
+        :key="item.id"
+        :comment="item"
+      ></Comment>
       <p v-if="isMore" @click="loadMore" class="comments-more">加载更多</p>
       <p v-if="isLoading" class="comments-more">
         <i style="margin-right: 5px;" class="el-icon-loading"></i>
         加载中...
       </p>
     </article>
-    <!--    <p>加载中...</p>-->
-    <!--    <p>没有更多了</p>-->
+    <el-dialog
+      title="文章编辑"
+      :visible.sync="dialogVisible"
+      width="90%"
+      class="dialog-comment-reply"
+    >
+      <WangEditor :body.sync="value" @on-change="editorChange"></WangEditor>
+      <el-row type="flex" justify="end">
+        <el-button icon="el-icon-edit" style="margin-top: 20px;" type="primary" size="small">
+          评论
+        </el-button>
+      </el-row>
+    </el-dialog>
   </el-main>
 </template>
 
@@ -64,6 +80,7 @@ export default class HelloWorld extends Vue {
   public count: number = 0;
   public page: number = 1;
   public isLoading: boolean = false;
+  public dialogVisible: boolean = false;
 
   @Watch('page')
   pageChange() {
@@ -129,8 +146,11 @@ export default class HelloWorld extends Vue {
     console.log(data);
   }
 
+  /**
+   * 评论
+   * @param reply
+   */
   public commentEdit(reply: string) {
-    console.log('reply', reply);
     const { value, slug } = this;
     commentCreate({ body: value, article: slug }).then(() => {
       this.$notify.error({
@@ -148,36 +168,49 @@ export default class HelloWorld extends Vue {
   public loadMore() {
     this.page += 1;
   }
+
+  public commentReply(data: InterfaceCommentsResponse) {
+    console.log(data);
+    this.dialogVisible = true;
+  }
 }
 </script>
 
-<style scoped lang="stylus">
-.article-main
-  background #fff
-  padding 20px 30px
-  margin-top 20px
-  min-height 80vh
-  border 1px solid transparent
-  box-shadow 0 2px 2px rgba(0,0,0,.05)
+<style lang="stylus">
+.article
+  .article-main
+    background #fff
+    padding 20px 30px
+    margin-top 20px
+    min-height 80vh
+    border 1px solid transparent
+    box-shadow 0 2px 2px rgba(0,0,0,.05)
 
-.user-info
-  margin-left 10px
-  p
-    margin 0
+  .user-info
+    margin-left 10px
+    p
+      margin 0
+      font-weight 500
+      font-size 16px
+      color #393d49
+    time
+      color #98a6ad
+
+  .comments
+    color #8a9aa9
+    font-size 20px
     font-weight 500
-    font-size 16px
-    color #393d49
-  time
-    color #98a6ad
+    padding 10px 0
 
-.comments
-  color #8a9aa9
-  font-size 20px
-  font-weight 500
-  padding 10px 0
+  .comments-more
+    text-align center
+    color #567482
+    cursor pointer
 
-.comments-more
-  text-align center
-  color #567482
-  cursor pointer
+  .dialog-comment-reply
+    .el-dialog
+      min-width 300px
+      max-width 600px
+    .el-dialog__body
+      padding 20px
 </style>
