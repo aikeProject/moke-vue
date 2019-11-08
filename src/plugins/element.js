@@ -28,6 +28,7 @@ import {
   Cascader,
   Breadcrumb,
   BreadcrumbItem,
+  Popover,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -54,6 +55,7 @@ Vue.use(Option);
 Vue.use(Cascader);
 Vue.use(Breadcrumb);
 Vue.use(BreadcrumbItem);
+Vue.use(Popover);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;

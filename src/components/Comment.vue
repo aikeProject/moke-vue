@@ -12,14 +12,17 @@
             <i class="el-icon-edit"></i>
             回复
           </el-link>
-          <el-link
-            v-if="comment.is_own"
-            @click="onReply(comment)"
-            style="color: #567482;margin-left: 10px;"
-          >
-            <i class="el-icon-delete"></i>
-            删除
-          </el-link>
+          <el-popover v-if="comment.is_own" placement="top" width="160" v-model="visible">
+            <div>确定删除？</div>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+              <el-button size="mini" type="primary" @click="onDelete(comment)">确定</el-button>
+            </div>
+            <el-link slot="reference" style="color: #567482;margin-left: 10px;">
+              <i class="el-icon-delete"></i>
+              删除
+            </el-link>
+          </el-popover>
         </p>
         <div class="comment-body" v-html="comment.body"></div>
       </div>
@@ -27,6 +30,7 @@
     <div class="comment-child">
       <Comment
         @on-reply="onReply"
+        @on-delete="onDelete"
         class="comment-child--background"
         v-for="item in comment.child"
         :key="item.id"
@@ -39,13 +43,22 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
 import { InterfaceCommentsResponse } from '@/common/Interface';
-
-@Component
+import ElPopover from 'element-ui/packages/popover/src/main.vue';
+@Component({
+  components: { ElPopover },
+})
 export default class Comment extends Vue {
   @Prop({ default: {} }) private comment: InterfaceCommentsResponse;
+  public visible: boolean = false;
 
   @Emit()
   onReply(comment: InterfaceCommentsResponse): InterfaceCommentsResponse {
+    return comment;
+  }
+
+  @Emit()
+  onDelete(comment: InterfaceCommentsResponse): InterfaceCommentsResponse {
+    this.visible = false;
     return comment;
   }
 

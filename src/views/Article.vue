@@ -30,6 +30,7 @@
       </section>
       <Comment
         @on-reply="commentReply"
+        @on-delete="commentDelete"
         v-for="item in comments"
         :key="item.id"
         :comment="item"
@@ -65,7 +66,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import showdown from 'showdown';
-import { ArticlesRead, commentsList, commentCreate } from '@/common/Api';
+import { ArticlesRead, commentsList, commentCreate, commentDelete } from '@/common/Api';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 import {
   InterfaceArticle,
@@ -157,7 +158,7 @@ export default class HelloWorld extends Vue {
   }
 
   public editorChange(data: any) {
-    console.log(data);
+    // do something
   }
 
   /**
@@ -193,11 +194,34 @@ export default class HelloWorld extends Vue {
     this.page += 1;
   }
 
+  /**
+   * 回复评论
+   * @param data
+   */
   public commentReply(data: InterfaceCommentsResponse) {
     const { id } = data;
     this.commentParent = 0;
     this.dialogVisible = true;
     this.commentParent = id;
+  }
+
+  /**
+   * 删除评论
+   * @param data
+   */
+  public commentDelete(data: InterfaceCommentsResponse) {
+    commentDelete(data.id).then(() => {
+      this.$notify.success({
+        title: '提示',
+        dangerouslyUseHTMLString: true,
+        message: '删除成功',
+        duration: 1000,
+        onClose: () => {
+          this.comments = [];
+          this.commentsList();
+        },
+      });
+    });
   }
 }
 </script>

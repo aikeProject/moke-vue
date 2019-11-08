@@ -91,3 +91,8 @@ export const commentsList = (data: InterfaceCommentsRequest = { article_slug: ''
 export const commentCreate = (data: InterfaceCommentRequest) => {
   return request.post(`${BASE}/comment/`, data);
 };
+
+// comment > del > delete删除评论
+export const commentDelete = (id: number) => {
+  return request.delete(`${BASE}/comment/del/${id}/`);
+};
