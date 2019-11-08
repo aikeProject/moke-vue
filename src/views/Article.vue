@@ -46,9 +46,15 @@
       width="90%"
       class="dialog-comment-reply"
     >
-      <WangEditor :body.sync="value" @on-change="editorChange"></WangEditor>
+      <WangEditor :body.sync="commentReplyValue" @on-change="editorChange"></WangEditor>
       <el-row type="flex" justify="end">
-        <el-button icon="el-icon-edit" style="margin-top: 20px;" type="primary" size="small">
+        <el-button
+          @click="commentEdit"
+          icon="el-icon-edit"
+          style="margin-top: 20px;"
+          type="primary"
+          size="small"
+        >
           评论
         </el-button>
       </el-row>
@@ -61,7 +67,11 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import showdown from 'showdown';
 import { ArticlesRead, commentsList, commentCreate } from '@/common/Api';
 import Breadcrumb from '@/components/Breadcrumb.vue';
-import { InterfaceArticle, InterfaceCommentsResponse } from '@/common/Interface';
+import {
+  InterfaceArticle,
+  InterfaceCommentRequest,
+  InterfaceCommentsResponse,
+} from '@/common/Interface';
 import Article from '@/components/Article.vue';
 import WangEditor from '@/components/WangEditor.vue';
 import Comment from '@/components/Comment.vue';
@@ -81,6 +91,8 @@ export default class HelloWorld extends Vue {
   public page: number = 1;
   public isLoading: boolean = false;
   public dialogVisible: boolean = false;
+  public commentParent: number = 0;
+  public commentReplyValue: string = '';
 
   @Watch('page')
   pageChange() {
@@ -116,6 +128,8 @@ export default class HelloWorld extends Vue {
   }
 
   public commentsList() {
+    // 分页
+    if (this.isLoading) return;
     this.isLoading = true;
 
     commentsList({
@@ -148,20 +162,30 @@ export default class HelloWorld extends Vue {
 
   /**
    * 评论
-   * @param reply
    */
-  public commentEdit(reply: string) {
-    const { value, slug } = this;
-    commentCreate({ body: value, article: slug }).then(() => {
-      this.$notify.error({
-        title: '评论',
-        type: 'success',
+  public commentEdit() {
+    const { value, slug, commentParent, commentReplyValue } = this;
+    const requestData: InterfaceCommentRequest = {
+      body: value,
+      article: slug,
+    };
+
+    // 回复
+    if (commentParent) {
+      requestData.parent = commentParent;
+      requestData.body = commentReplyValue;
+    }
+
+    commentCreate(requestData).then(() => {
+      this.$notify.success({
+        title: commentParent ? '回复' : '评论',
         dangerouslyUseHTMLString: true,
-        message: '评论成功',
+        message: commentParent ? '回复成功' : '评论成功',
       });
 
       this.comments = [];
       this.commentsList();
+      this.dialogVisible = false;
     });
   }
 
@@ -170,8 +194,10 @@ export default class HelloWorld extends Vue {
   }
 
   public commentReply(data: InterfaceCommentsResponse) {
-    console.log(data);
+    const { id } = data;
+    this.commentParent = 0;
     this.dialogVisible = true;
+    this.commentParent = id;
   }
 }
 </script>
@@ -184,15 +210,17 @@ export default class HelloWorld extends Vue {
     margin-top 20px
     min-height 80vh
     border 1px solid transparent
-    box-shadow 0 2px 2px rgba(0,0,0,.05)
+    box-shadow 0 2px 2px rgba(0, 0, 0, .05)
 
   .user-info
     margin-left 10px
+
     p
       margin 0
       font-weight 500
       font-size 16px
       color #393d49
+
     time
       color #98a6ad
 
@@ -211,6 +239,7 @@ export default class HelloWorld extends Vue {
     .el-dialog
       min-width 300px
       max-width 600px
+
     .el-dialog__body
       padding 20px
 </style>

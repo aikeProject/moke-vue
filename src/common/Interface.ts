@@ -132,7 +132,7 @@ export interface InterfaceCommentsRequest extends InterfacePagination {
 }
 
 export interface InterfaceCommentsResponse extends InterfaceBae {
-  id: string;
+  id: number;
   author: {
     uid: string;
     username: string;
@@ -145,9 +145,8 @@ export interface InterfaceCommentsResponse extends InterfaceBae {
   parent: number;
 }
 
-export interface InterfaceCommentReqest {
+export interface InterfaceCommentRequest {
   body: string;
   article: string;
-  reply?: string;
-  parent?: string;
+  parent?: number;
 }
