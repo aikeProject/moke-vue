@@ -7,9 +7,19 @@
       <div class="comment-right">
         <p class="comment-author">
           {{ (comment.author || {}).username }}
-          {{ comment.is_own ? ' (作者) ' : '' }}
           <time>{{ comment.created_at }}</time>
-          <el-link @click="onReply(comment)" style="color: #567482;">回复</el-link>
+          <el-link @click="onReply(comment)" style="color: #567482;">
+            <i class="el-icon-edit"></i>
+            回复
+          </el-link>
+          <el-link
+            v-if="comment.is_own"
+            @click="onReply(comment)"
+            style="color: #567482;margin-left: 10px;"
+          >
+            <i class="el-icon-delete"></i>
+            删除
+          </el-link>
         </p>
         <div class="comment-body" v-html="comment.body"></div>
       </div>
