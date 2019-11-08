@@ -20,6 +20,32 @@ const defaultConfig: InterfaceRequestConfig = {
   error: true,
 };
 
+/**
+ * 取出返回的错误
+ * @param data
+ * @param result
+ */
+function mergeError(data: any, result: string[] = []): any {
+  let error = '';
+
+  if (typeof data === 'string') {
+    error = `<div>${data}</div>`;
+    result.push(error);
+  }
+
+  if (Object.prototype.toString.call(data) === '[object Array]') {
+    (data as Array<string>).map(str => result.push(`<div>${str}</div>`));
+  }
+
+  if (Object.prototype.toString.call(data) === '[object Object]') {
+    Object.values(data).map(item => {
+      mergeError(item, result);
+    });
+  }
+
+  return result.join('');
+}
+
 function responseRejectedError(error: AxiosError<InterfaceError>) {
   const { response } = error;
 
@@ -29,14 +55,12 @@ function responseRejectedError(error: AxiosError<InterfaceError>) {
     if (data && 'detail' in data) {
       let { detail } = data;
 
-      if (Object.prototype.toString.call(detail) === '[object Array]') {
-        detail = (detail as Array<string>).map(str => `<div>${str}</div>`).join('');
-      }
+      const errors = mergeError(detail);
 
       Notification.error({
         title: '错误',
         dangerouslyUseHTMLString: true,
-        message: detail,
+        message: errors,
       });
     }
   }

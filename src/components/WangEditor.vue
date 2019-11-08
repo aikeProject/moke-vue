@@ -69,10 +69,12 @@ export default class WangEditor extends Vue {
     padding 10px
     border solid 1px #dce6f0 !important
     border-top none !important
-    z-index 99 !important
+    z-index 9 !important
   .w-e-toolbar
     border solid 1px #dce6f0 !important
     background #f3f6fa!important
     display flex
     flex-wrap wrap
+  .w-e-menu
+    z-index 9 !important
 </style>
