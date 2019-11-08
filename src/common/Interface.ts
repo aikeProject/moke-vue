@@ -139,6 +139,7 @@ export interface InterfaceCommentsResponse extends InterfaceBae {
     image: string;
   };
   child: InterfaceCommentsResponse[];
+  is_delete: boolean;
   is_own: boolean;
   body: string;
   article: number;

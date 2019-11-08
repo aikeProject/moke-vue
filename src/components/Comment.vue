@@ -7,12 +7,13 @@
       <div class="comment-right">
         <p class="comment-author">
           {{ (comment.author || {}).username }}
+          {{ comment.is_own ? '(作者)' : '' }}
           <time>{{ comment.old_time }}</time>
           <el-link @click="onReply(comment)" style="color: #567482;">
             <i class="el-icon-edit"></i>
             回复
           </el-link>
-          <el-popover v-if="comment.is_own" placement="top" width="160" v-model="visible">
+          <el-popover v-if="comment.is_delete" placement="top" width="160" v-model="visible">
             <div>确定删除？</div>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" type="text" @click="visible = false">取消</el-button>
