@@ -7,7 +7,7 @@
       <div class="comment-right">
         <p class="comment-author">
           {{ (comment.author || {}).username }}
-          <time>{{ comment.created_at }}</time>
+          <time>{{ comment.old_time }}</time>
           <el-link @click="onReply(comment)" style="color: #567482;">
             <i class="el-icon-edit"></i>
             回复

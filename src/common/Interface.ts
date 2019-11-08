@@ -143,6 +143,7 @@ export interface InterfaceCommentsResponse extends InterfaceBae {
   body: string;
   article: number;
   parent: number;
+  old_time: string; // 刚刚、几秒前、几天前....
 }
 
 export interface InterfaceCommentRequest {
