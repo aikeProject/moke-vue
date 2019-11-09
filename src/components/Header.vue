@@ -1,9 +1,11 @@
 <template>
-  <el-header class="header" style="height: 52px;">
+  <el-header class="header" style="height: 52px;padding: 0 10px;">
     <el-row type="flex" justify="center" style="height: 100%;">
       <el-col :span="spanNo" class="hidden-xs-only">
         <el-row type="flex" justify="space-between" align="middle" style="height: 100%;">
-          <router-link to="/">
+          <i @click="isCollapse = true" v-if="!isShowMenu" class="el-icon-s-fold menu-collapse"></i>
+          <i @click="isCollapse = false" v-else class="el-icon-s-unfold menu-collapse"></i>
+          <router-link v-if="!menu" to="/">
             <i class="el-icon-ice-cream-round logo">&nbsp;&nbsp;moke</i>
           </router-link>
           <el-row type="flex" align="middle">
@@ -56,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop, Emit, Watch } from 'vue-property-decorator';
 import { State, Action } from 'vuex-class';
 import { InterfaceUserInfo } from '@/common/Interface';
 import ElAvatar from 'element-ui/packages/avatar/src/main.vue';
@@ -67,6 +69,13 @@ import ElAvatar from 'element-ui/packages/avatar/src/main.vue';
 export default class Header extends Vue {
   @State('userInfo') userInfo: InterfaceUserInfo;
   @Action('logOut') logOut: Function;
+  @Prop({ type: Boolean, default: false }) menu: boolean;
+  public isCollapse: boolean = false;
+
+  @Watch('isCollapse')
+  changeCollapse(collapse: boolean) {
+    this.onCollapse(collapse);
+  }
 
   get isLogin() {
     return !!this.userInfo.username;
@@ -74,6 +83,15 @@ export default class Header extends Vue {
 
   get spanNo() {
     return this.userInfo.username ? 24 : 20;
+  }
+
+  get isShowMenu() {
+    return this.menu && this.isCollapse;
+  }
+
+  @Emit()
+  onCollapse(isCollapse: boolean) {
+    return isCollapse;
   }
 
   public errorAvatar(): boolean {
@@ -120,7 +138,12 @@ export default class Header extends Vue {
   margin-right 10px
 
 .logo
-  font-size: 20px;
-  font-style: italic;
+  font-size 20px
+  font-style italic
   color #606266
+
+.menu-collapse
+  font-size 20px
+  color #393d49
+  cursor pointer
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="personal-home">
     <el-row style="height: 100%;">
       <el-col
         style="height: 100%;"
@@ -10,7 +10,7 @@
         <el-container class="home-container">
           <el-aside width="200px" class="aside">
             <div class="aside-content">
-              <router-link :to="{ name: 'user', params: { uid: userInfo.uid } }">
+              <router-link v-if="!isCollapse" :to="{ name: 'user', params: { uid: userInfo.uid } }">
                 <el-row class="user-info" type="flex" align="middle">
                   <el-avatar class="avatar" :src="userInfo.image" @error="errorAvatar">
                     <img
@@ -25,13 +25,12 @@
               <el-menu
                 default-active="1"
                 style="width: 100%;"
-                @open="handleOpen"
-                @close="handleClose"
                 background-color="#393d49"
                 text-color="#fff"
                 active-text-color="#ffd04b"
                 router
                 :collapse="isCollapse"
+                class="menu-container"
               >
                 <el-menu-item index="1" :route="{ name: 'user', params: { uid: userInfo.uid } }">
                   <i class="el-icon-s-home"></i>
@@ -45,7 +44,7 @@
             </div>
           </el-aside>
           <el-container class="is-vertical">
-            <Header></Header>
+            <Header menu @on-collapse="changeCollapse"></Header>
             <el-main class="main">
               <router-view></router-view>
             </el-main>
@@ -73,48 +72,51 @@ export default class PersonalHome extends Vue {
     return true;
   }
 
-  public handleOpen(key, keyPath) {
-    console.log(key, keyPath);
-  }
-
-  public handleClose(key, keyPath) {
-    console.log(key, keyPath);
+  public changeCollapse(collapse: boolean) {
+    this.isCollapse = collapse;
   }
 }
 </script>
 
-<style scoped lang="stylus">
-.home-container
-  box-shadow 0 0 30px rgba(0, 0, 0, .3)
-  background #f1f3f4
-  min-height 100vh
+<style lang="stylus">
+.personal-home
+  .home-container
+    box-shadow 0 0 30px rgba(0, 0, 0, .3)
+    background #f1f3f4
+    min-height 100vh
 
-.main
-  padding 0
+  .main
+    padding 0
 
-.aside
-  overflow unset
+  .aside
+    overflow unset
 
-.aside-content
-  position: sticky;
-  top: 0;
-  z-index: 99;
-  height 100vh
-  background #393d49
+  .aside-content
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    height 100vh
+    background #393d49
 
-.avatar
-  width 100px
-  height 100px
-  margin-top 20px
-  cursor pointer
+  .avatar
+    width 100px
+    height 100px
+    margin-top 20px
+    cursor pointer
 
-.username
-  color #fff
-  padding-top 10px
-  font-size 18px
-  font-weight 500
-  cursor pointer
+  .username
+    color #fff
+    padding-top 10px
+    font-size 18px
+    font-weight 500
+    cursor pointer
 
-.user-info
-  flex-direction column
+  .user-info
+    flex-direction column
+
+  .menu-container
+    > li
+      padding 0 10px !important
+      > i
+        font-size 20px
 </style>

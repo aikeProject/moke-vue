@@ -31,8 +31,6 @@ import {
   Popover,
   Menu,
   MenuItem,
-  MenuItemGroup,
-  Submenu,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -62,8 +60,6 @@ Vue.use(BreadcrumbItem);
 Vue.use(Popover);
 Vue.use(Menu);
 Vue.use(MenuItem);
-Vue.use(MenuItemGroup);
-Vue.use(Submenu);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;
