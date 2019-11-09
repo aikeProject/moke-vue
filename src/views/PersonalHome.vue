@@ -10,7 +10,17 @@
         <el-container class="home-container">
           <el-aside width="200px" class="aside">
             <div class="aside-content">
-              Aside
+              <router-link :to="{ name: 'user', params: { uid: userInfo.uid } }">
+                <el-row class="user-info" type="flex" align="middle">
+                  <el-avatar class="avatar" :src="userInfo.image" @error="errorAvatar">
+                    <img
+                      src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+                      alt=""
+                    />
+                  </el-avatar>
+                  <div class="username">{{ userInfo.username }}</div>
+                </el-row>
+              </router-link>
             </div>
           </el-aside>
           <el-container class="is-vertical">
@@ -25,17 +35,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 import Header from '@/components/Header.vue';
-import { InterfaceUserInfo } from '../common/Interface';
+import { InterfaceUserInfo } from '@/common/Interface';
 
 @Component({
-  components: {
-    Header,
-  },
+  components: { Header },
 })
-export default class Home extends Vue {}
+export default class PersonalHome extends Vue {
+  @State('userInfo') userInfo: InterfaceUserInfo;
+
+  public errorAvatar(): boolean {
+    return true;
+  }
+}
 </script>
 
 <style scoped lang="stylus">
@@ -56,4 +71,20 @@ export default class Home extends Vue {}
   z-index: 99;
   height 100vh
   background #393d49
+
+.avatar
+  width 100px
+  height 100px
+  margin-top 20px
+  cursor pointer
+
+.username
+  color #fff
+  padding-top 10px
+  font-size 18px
+  font-weight 500
+  cursor pointer
+
+.user-info
+  flex-direction column
 </style>

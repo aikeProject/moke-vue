@@ -1,12 +1,6 @@
 <template>
   <el-container>
     <el-main class="main">
-      <Info>
-        <template v-slot:title>
-          哈哈
-        </template>
-        Here might be a page title
-      </Info>
       <div style="height: 20px"></div>
       <div class="article-content" v-for="item in articles" :key="item.id">
         <Article class="article--margin">
