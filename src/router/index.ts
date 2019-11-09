@@ -56,6 +56,12 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "userCategoryTag" */ '../views/PersonalIndex.vue'),
       },
+      {
+        path: 'timeline',
+        name: 'timeline',
+        props: true,
+        component: () => import(/* webpackChunkName: "userCategoryTag" */ '../views/TimeLine.vue'),
+      },
     ],
   },
   {

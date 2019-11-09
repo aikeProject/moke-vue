@@ -27,7 +27,7 @@
                 </el-row>
               </transition>
               <el-menu
-                default-active="1"
+                :default-active="menuActive"
                 style="width: 100%"
                 background-color="#393d49"
                 text-color="#fff"
@@ -41,7 +41,10 @@
                   <i class="el-icon-s-home"></i>
                   <span slot="title">主页</span>
                 </el-menu-item>
-                <el-menu-item index="2" :route="{ name: 'user', params: { uid: userInfo.uid } }">
+                <el-menu-item
+                  index="2"
+                  :route="{ name: 'timeline', params: { uid: userInfo.uid } }"
+                >
                   <i class="el-icon-time"></i>
                   <span slot="title">时间轴</span>
                 </el-menu-item>
@@ -75,6 +78,18 @@ export default class PersonalHome extends Vue {
 
   get menuWidth() {
     return this.isCollapse ? '65px' : '200px';
+  }
+
+  get menuActive() {
+    const name = this.$route.name || 'user';
+    const menu = {
+      user: '1',
+      userCategoryTag: '1',
+      timeline: '2',
+    };
+
+    // @ts-ignore
+    return menu[name] || '1';
   }
 
   public errorAvatar(): boolean {

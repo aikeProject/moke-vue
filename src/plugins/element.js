@@ -39,6 +39,9 @@ import {
   Menu,
   MenuItem,
   Tooltip,
+  Timeline,
+  TimelineItem,
+  Card,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -69,6 +72,9 @@ Vue.use(Popover);
 Vue.use(Menu);
 Vue.use(MenuItem);
 Vue.use(Tooltip);
+Vue.use(Timeline);
+Vue.use(TimelineItem);
+Vue.use(Card);
 Vue.use(Loading.directive);
 Vue.use(CollapseTransition);
 
