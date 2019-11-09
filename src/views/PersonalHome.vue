@@ -21,6 +21,27 @@
                   <div class="username">{{ userInfo.username }}</div>
                 </el-row>
               </router-link>
+              <div style="height: 20px;"></div>
+              <el-menu
+                default-active="1"
+                style="width: 100%;"
+                @open="handleOpen"
+                @close="handleClose"
+                background-color="#393d49"
+                text-color="#fff"
+                active-text-color="#ffd04b"
+                router
+                :collapse="isCollapse"
+              >
+                <el-menu-item index="1" :route="{ name: 'user', params: { uid: userInfo.uid } }">
+                  <i class="el-icon-s-home"></i>
+                  <span slot="title">主页</span>
+                </el-menu-item>
+                <el-menu-item index="2" :route="{ name: 'user', params: { uid: userInfo.uid } }">
+                  <i class="el-icon-time"></i>
+                  <span slot="title">时间轴</span>
+                </el-menu-item>
+              </el-menu>
             </div>
           </el-aside>
           <el-container class="is-vertical">
@@ -46,9 +67,18 @@ import { InterfaceUserInfo } from '@/common/Interface';
 })
 export default class PersonalHome extends Vue {
   @State('userInfo') userInfo: InterfaceUserInfo;
+  public isCollapse: boolean = false;
 
   public errorAvatar(): boolean {
     return true;
+  }
+
+  public handleOpen(key, keyPath) {
+    console.log(key, keyPath);
+  }
+
+  public handleClose(key, keyPath) {
+    console.log(key, keyPath);
   }
 }
 </script>
