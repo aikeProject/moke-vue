@@ -8,27 +8,32 @@
         :md="{ span: 20, offset: 2 }"
       >
         <el-container class="home-container">
-          <el-aside width="200px" class="aside">
+          <el-aside class="aside-menu" :width="menuWidth">
             <div class="aside-content">
-              <router-link v-if="!isCollapse" :to="{ name: 'user', params: { uid: userInfo.uid } }">
-                <el-row class="user-info" type="flex" align="middle">
-                  <el-avatar class="avatar" :src="userInfo.image" @error="errorAvatar">
-                    <img
-                      src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
-                      alt=""
-                    />
-                  </el-avatar>
-                  <div class="username">{{ userInfo.username }}</div>
+              <transition name="el-zoom-in-center">
+                <el-row v-if="!isCollapse" class="user-info" type="flex" align="middle">
+                  <router-link
+                    style="text-align: center;"
+                    :to="{ name: 'user', params: { uid: userInfo.uid } }"
+                  >
+                    <el-avatar class="user-info-avatar" :src="userInfo.image" @error="errorAvatar">
+                      <img
+                        src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+                        alt=""
+                      />
+                    </el-avatar>
+                    <div class="username">{{ userInfo.username }}</div>
+                  </router-link>
                 </el-row>
-              </router-link>
-              <div style="height: 20px;"></div>
+              </transition>
               <el-menu
                 default-active="1"
-                style="width: 100%;"
+                style="width: 100%"
                 background-color="#393d49"
                 text-color="#fff"
                 active-text-color="#ffd04b"
                 router
+                :collapse-transition="false"
                 :collapse="isCollapse"
                 class="menu-container"
               >
@@ -68,6 +73,10 @@ export default class PersonalHome extends Vue {
   @State('userInfo') userInfo: InterfaceUserInfo;
   public isCollapse: boolean = false;
 
+  get menuWidth() {
+    return this.isCollapse ? '65px' : '200px';
+  }
+
   public errorAvatar(): boolean {
     return true;
   }
@@ -88,8 +97,10 @@ export default class PersonalHome extends Vue {
   .main
     padding 0
 
-  .aside
+  .aside-menu
     overflow unset
+    background #393d49
+    transition width ease-in 300ms
 
   .aside-content
     position: sticky;
@@ -98,7 +109,7 @@ export default class PersonalHome extends Vue {
     height 100vh
     background #393d49
 
-  .avatar
+  .user-info-avatar
     width 100px
     height 100px
     margin-top 20px
@@ -119,4 +130,9 @@ export default class PersonalHome extends Vue {
       padding 0 10px !important
       > i
         font-size 20px
+
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
 </style>
