@@ -32,6 +32,13 @@ const routes = [
         meta: { title: '文章' },
         component: () => import(/* webpackChunkName: "Article" */ '../views/Article.vue'),
       },
+      {
+        path: 'user',
+        name: 'userInfo',
+        props: true,
+        meta: { title: '用户信息' },
+        component: () => import(/* webpackChunkName: "User" */ '../views/User.vue'),
+      },
     ],
   },
   {
@@ -54,13 +61,14 @@ const routes = [
         props: true,
         meta: { title: '个人主页' },
         component: () =>
-          import(/* webpackChunkName: "userCategoryTag" */ '../views/PersonalIndex.vue'),
+          import(/* webpackChunkName: "PersonalIndex" */ '../views/PersonalIndex.vue'),
       },
       {
         path: 'timeline',
         name: 'timeline',
         props: true,
-        component: () => import(/* webpackChunkName: "userCategoryTag" */ '../views/TimeLine.vue'),
+        meta: { title: '时间轴' },
+        component: () => import(/* webpackChunkName: "TimeLine" */ '../views/TimeLine.vue'),
       },
     ],
   },

@@ -38,6 +38,9 @@
                 />
               </el-avatar>
               <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="index" style="font-size: 16px;" icon="el-icon-s-home">
+                  个人主页
+                </el-dropdown-item>
                 <el-dropdown-item
                   command="info"
                   style="font-size: 16px;"
@@ -104,11 +107,15 @@ export default class Header extends Vue {
     return true;
   }
 
-  public handleCommand(command: 'info' | 'out'): void {
-    if (command === 'info') {
+  public handleCommand(command: 'index' | 'info' | 'out'): void {
+    if (command === 'index') {
       const { uid } = this.userInfo;
 
       this.$router.push({ name: 'user', params: { uid: uid } });
+    }
+
+    if (command === 'info') {
+      this.$router.push({ name: 'userInfo' });
     }
 
     if (command === 'out') {
