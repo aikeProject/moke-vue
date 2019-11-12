@@ -85,7 +85,16 @@ export default class User extends Vue {
         const { username, blog } = this.ruleForm;
         const { title, site_name } = blog;
 
-        this.userUpdate({ username, image: imageFile, blog: { title, site_name } });
+        this.userUpdate({ username, image: imageFile, blog: { title, site_name } }).then(() => {
+          this.$notify({
+            title: '提示',
+            dangerouslyUseHTMLString: true,
+            message: '修改成功',
+            type: 'success',
+            duration: 2 * 1000,
+            onClose: () => {},
+          });
+        });
       } else {
         return false;
       }
@@ -97,7 +106,6 @@ export default class User extends Vue {
     const isLt2M = fileData.size / 1024 / 1024 < 2;
 
     if (!isLt2M) {
-      // @ts-ignore
       this.$message.error('上传头像图片大小不能超过 2MB!');
       return;
     }
