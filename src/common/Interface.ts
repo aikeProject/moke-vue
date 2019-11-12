@@ -34,6 +34,10 @@ export interface InterfacePagination {
 export interface InterfaceUpdateUser {
   username: string;
   image: File;
+  blog: {
+    title: string;
+    site_name: string;
+  };
 }
 
 export interface InterfacePaginationBase<T = any> {

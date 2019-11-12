@@ -35,6 +35,41 @@ export function asyncLoad(src: string, type: 'js' | 'css' = 'js') {
 }
 
 /**
+ * 序列化FormData
+ * @param data { username: '成雨3', blog: { title: '修改沙发沙发', site_name: '风流直下三千尺' } }
+ * @return {FormData}  username: 成雨3
+                     blog.title: 修改沙发沙发
+                     blog.site_name: 风流直下三千尺
+ */
+function formDataSerializer<T = Object>(data: T): FormData {
+  const formData = new FormData();
+
+  const fn = (source: Object, key: string = '') => {
+    for (let dataKey in source) {
+      // @ts-ignore
+      const item = source[dataKey];
+      const strKey = key ? `${key}.${dataKey}` : dataKey;
+
+      if (item) {
+        if (isObject(item)) {
+          fn(item, strKey);
+        } else {
+          if (key) {
+            formData.set(strKey, item);
+          } else {
+            formData.set(dataKey, item);
+          }
+        }
+      }
+    }
+  };
+
+  fn(data);
+
+  return formData;
+}
+
+/**
  * var array = [
     { 'dir': 'left', 'code': 97 },
     { 'dir': 'right', 'code': 100 }
@@ -76,4 +111,4 @@ function trim(str: string): string {
   return str.replace(/^\s*/, '').replace(/\s*$/, '');
 }
 
-export { keyBy, isArray, isObject, trim };
+export { keyBy, isArray, isObject, trim, formDataSerializer };

@@ -28,6 +28,12 @@
         <el-form-item label="用户名" prop="username">
           <el-input v-model="ruleForm.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
+        <el-form-item label="博客标题" prop="title">
+          <el-input v-model="ruleForm.blog.title" placeholder="请输入博客标题"></el-input>
+        </el-form-item>
+        <el-form-item label="博客签名" prop="site_name">
+          <el-input v-model="ruleForm.blog.site_name" placeholder="请输入博客标签"></el-input>
+        </el-form-item>
         <el-form-item style="margin-bottom: 0;">
           <el-button type="primary" @click="submitForm('ruleForm')">修改</el-button>
         </el-form-item>
@@ -52,6 +58,10 @@ export default class User extends Vue {
   private imageFile: File;
   private ruleForm = {
     username: '',
+    blog: {
+      title: '',
+      site_name: '',
+    },
   };
 
   get imageUrlComputed(): string {
@@ -63,16 +73,19 @@ export default class User extends Vue {
   };
 
   public created() {
-    const { username } = this.userInfo;
-    this.ruleForm = { username };
+    const { username, blog } = this.userInfo;
+    const { title, site_name } = blog || { title: '', site_name: '' };
+    this.ruleForm = { username, blog: { title, site_name } };
   }
 
   public submitForm(formName: string) {
     (this.$refs[formName] as ElForm).validate((isValid: boolean) => {
       if (isValid) {
         const { imageFile } = this;
-        const { username } = this.ruleForm;
-        this.userUpdate({ username, image: imageFile });
+        const { username, blog } = this.ruleForm;
+        const { title, site_name } = blog;
+
+        this.userUpdate({ username, image: imageFile, blog: { title, site_name } });
       } else {
         return false;
       }
@@ -98,6 +111,7 @@ export default class User extends Vue {
 <style lang="stylus">
 .user-edit
   padding 20px
+
   .box-card
     max-width 500px
     min-width 335px
