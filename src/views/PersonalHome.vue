@@ -22,10 +22,10 @@
                         alt=""
                       />
                     </el-avatar>
-                    <div class="username">{{ userInfo.username }}</div>
                   </router-link>
                 </el-row>
               </transition>
+              <div style="height: 20px;"></div>
               <el-menu
                 :default-active="menuActive"
                 style="width: 100%"
@@ -52,7 +52,7 @@
             </div>
           </el-aside>
           <el-container class="is-vertical">
-            <Header menu @on-collapse="changeCollapse"></Header>
+            <Header :menu="true" @on-collapse="changeCollapse"></Header>
             <el-main class="main">
               <router-view></router-view>
             </el-main>
@@ -77,7 +77,7 @@ export default class PersonalHome extends Vue {
   public isCollapse: boolean = false;
 
   get menuWidth() {
-    return this.isCollapse ? '65px' : '200px';
+    return this.isCollapse ? '65px' : '150px';
   }
 
   get menuActive() {
@@ -128,13 +128,6 @@ export default class PersonalHome extends Vue {
     width 100px
     height 100px
     margin-top 20px
-    cursor pointer
-
-  .username
-    color #fff
-    padding-top 10px
-    font-size 18px
-    font-weight 500
     cursor pointer
 
   .user-info

@@ -3,8 +3,18 @@
     <el-row type="flex" justify="center" style="height: 100%;">
       <el-col :span="spanNo" class="hidden-xs-only">
         <el-row type="flex" justify="space-between" align="middle" style="height: 100%;">
-          <i @click="isCollapse = true" v-if="!isShowMenu" class="el-icon-s-fold menu-collapse"></i>
-          <i @click="isCollapse = false" v-else class="el-icon-s-unfold menu-collapse"></i>
+          <div v-if="menu">
+            <i
+              @click="isCollapse = false"
+              v-show="isCollapse"
+              class="el-icon-s-fold menu-collapse"
+            ></i>
+            <i
+              @click="isCollapse = true"
+              v-show="!isCollapse"
+              class="el-icon-s-unfold menu-collapse"
+            ></i>
+          </div>
           <router-link v-if="!menu" to="/">
             <i class="el-icon-ice-cream-round logo">&nbsp;&nbsp;moke</i>
           </router-link>
@@ -83,10 +93,6 @@ export default class Header extends Vue {
 
   get spanNo() {
     return this.userInfo.username ? 24 : 20;
-  }
-
-  get isShowMenu() {
-    return this.menu && this.isCollapse;
   }
 
   @Emit()

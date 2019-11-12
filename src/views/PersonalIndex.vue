@@ -34,7 +34,7 @@
     </el-main>
     <el-aside class="aside" width="240px">
       <div class="aside-right">
-        <div class="category-list">
+        <div v-show="!!categorys.length" class="category-list">
           <div class="tag-title">
             <router-link :to="{ name: 'user' }">
               <el-link type="primary">分类</el-link>
@@ -51,7 +51,7 @@
             </template>
           </el-row>
         </div>
-        <div class="tag-list">
+        <div class="tag-list" v-show="!!tags.length">
           <div class="tag-title">
             <router-link :to="{ name: 'user' }">
               <el-link type="primary">标签</el-link>
