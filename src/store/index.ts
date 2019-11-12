@@ -1,8 +1,13 @@
 import Vue from 'vue';
 import Vuex, { ActionContext } from 'vuex';
 import { State, Mutations } from './interface';
-import { RegisterApi, LoginApi, UserInfo } from '@/common/Api';
-import { InterfaceRegister, InterfaceLogin, InterfaceUserInfo } from '@/common/Interface';
+import { RegisterApi, LoginApi, UserInfo, updateUser } from '@/common/Api';
+import {
+  InterfaceRegister,
+  InterfaceLogin,
+  InterfaceUserInfo,
+  InterfaceUpdateUser,
+} from '@/common/Interface';
 import { Storage } from '@/common/Enum';
 
 Vue.use(Vuex);
@@ -44,7 +49,7 @@ const actions = {
     const { data } = await RegisterApi(request);
     if (data.token) {
       localStorage.setItem(Storage.TOKEN, data.token);
-      await dispatch('userInfo', data);
+      await dispatch('userInfo');
     }
   },
   async login({ commit, dispatch }: ActionContext<State, State>, request: InterfaceLogin) {
@@ -53,6 +58,13 @@ const actions = {
       localStorage.setItem(Storage.TOKEN, data.token);
       await dispatch('userInfo');
     }
+  },
+  async userUpdate(
+    { commit, dispatch, state }: ActionContext<State, State>,
+    request: InterfaceUpdateUser
+  ) {
+    await updateUser(state.userInfo.uid, request);
+    await dispatch('userInfo');
   },
   async userInfo({ commit }: ActionContext<State, State>) {
     const { data } = await UserInfo();

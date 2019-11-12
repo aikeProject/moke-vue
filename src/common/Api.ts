@@ -21,8 +21,10 @@ import {
   InterfaceCommentsResponse,
   InterfacePaginationBase,
   InterfaceCommentRequest,
+  InterfaceUpdateUser,
 } from './Interface';
 import { AxiosRequestConfig } from 'axios';
+import { keyBy } from '@/utils/core';
 
 const BASE = 'api';
 
@@ -39,6 +41,23 @@ export const LoginApi = (data: InterfaceLogin, config?: AxiosRequestConfig) => {
 // 查看当前登录用户信息
 export const UserInfo = () =>
   requestBase({ error: false }).get<InterfaceUserInfo>(`${BASE}/user/1/`);
+
+// 修改个人资料 /api/user/update/4ecd6a25-e069-4e91-9d89-85a30d22f260/
+export const updateUser = (uid: string, data: InterfaceUpdateUser) => {
+  const formData = new FormData();
+
+  for (let dataKey in data) {
+    // @ts-ignore
+    if (data[dataKey]) {
+      // @ts-ignore
+      formData.set(dataKey, data[dataKey]);
+    }
+  }
+
+  return request.put(`/api/user/update/${uid}/`, formData, {
+    // headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
 
 // 文章列表
 export const ArticlesList = (params: InterfaceArticlesRequest) => {

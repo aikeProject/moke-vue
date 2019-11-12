@@ -16,10 +16,8 @@
         <el-form-item label="头像">
           <el-upload
             class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action=""
             :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
             :on-change="changeAvatar"
             :auto-upload="false"
           >
@@ -40,22 +38,21 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { State } from 'vuex-class';
+import { State, Action } from 'vuex-class';
 import { InterfaceUserInfo } from '@/common/Interface';
 import { ElForm } from 'element-ui/types/form';
-import { ElUploadInternalFileDetail, ElUploadInternalRawFile } from 'element-ui/types/upload';
+import { ElUploadInternalFileDetail } from 'element-ui/types/upload';
 
 @Component
 export default class User extends Vue {
   @State('userInfo') userInfo: InterfaceUserInfo;
+  @Action('userUpdate') userUpdate: Function;
   @Prop({ default: '' }) private uid: string;
   private imageUrl: string = '';
-
-  get ruleForm() {
-    return {
-      username: this.userInfo.username,
-    };
-  }
+  private imageFile: File;
+  private ruleForm = {
+    username: '',
+  };
 
   get imageUrlComputed(): string {
     return this.imageUrl || this.userInfo.image;
@@ -65,44 +62,35 @@ export default class User extends Vue {
     username: [{ message: '请输入用户名', trigger: 'blur' }],
   };
 
-  public created() {}
+  public created() {
+    const { username } = this.userInfo;
+    this.ruleForm = { username };
+  }
 
   public submitForm(formName: string) {
     (this.$refs[formName] as ElForm).validate((isValid: boolean) => {
       if (isValid) {
-        // do something
+        const { imageFile } = this;
+        const { username } = this.ruleForm;
+        this.userUpdate({ username, image: imageFile });
       } else {
         return false;
       }
     });
   }
 
-  handleAvatarSuccess(
-    response: any,
-    file: ElUploadInternalFileDetail,
-    fileList: ElUploadInternalFileDetail[]
-  ) {
-    // do something
-  }
+  changeAvatar(file: ElUploadInternalFileDetail) {
+    const fileData = file.raw;
+    const isLt2M = fileData.size / 1024 / 1024 < 2;
 
-  beforeAvatarUpload(file: ElUploadInternalRawFile) {
-    console.log(file);
-    const isJPG = file.type === 'image/jpeg';
-    const isLt2M = file.size / 1024 / 1024 < 2;
-
-    if (!isJPG) {
-      // @ts-ignore
-      this.$message.error('上传头像图片只能是 JPG 格式!');
-    }
     if (!isLt2M) {
       // @ts-ignore
       this.$message.error('上传头像图片大小不能超过 2MB!');
+      return;
     }
-    return isJPG && isLt2M;
-  }
 
-  changeAvatar(file: ElUploadInternalFileDetail) {
-    this.imageUrl = URL.createObjectURL(file.raw);
+    this.imageFile = fileData;
+    this.imageUrl = URL.createObjectURL(fileData);
   }
 }
 </script>
@@ -116,8 +104,6 @@ export default class User extends Vue {
     margin 0 auto
 
   .avatar-uploader
-    display flex
-    justify-content center
     .el-upload
       border 1px dashed #d9d9d9
       border-radius 6px

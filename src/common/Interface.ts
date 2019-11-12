@@ -31,6 +31,11 @@ export interface InterfacePagination {
   page_size?: number;
 }
 
+export interface InterfaceUpdateUser {
+  username: string;
+  image: File;
+}
+
 export interface InterfacePaginationBase<T = any> {
   count: number;
   next: string;
