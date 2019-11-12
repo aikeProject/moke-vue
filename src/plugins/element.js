@@ -42,6 +42,7 @@ import {
   Timeline,
   TimelineItem,
   Card,
+  Upload,
 } from 'element-ui';
 
 Vue.use(Button);
@@ -75,6 +76,7 @@ Vue.use(Tooltip);
 Vue.use(Timeline);
 Vue.use(TimelineItem);
 Vue.use(Card);
+Vue.use(Upload);
 Vue.use(Loading.directive);
 Vue.use(CollapseTransition);
 

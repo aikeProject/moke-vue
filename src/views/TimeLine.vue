@@ -25,7 +25,7 @@ import { InterfaceArticle, InterfaceArticlesRequest } from '@/common/Interface';
 import { ArticlesList } from '@/common/Api';
 
 @Component
-export default class HelloWorld extends Vue {
+export default class TimeLine extends Vue {
   @Prop({ default: '' }) private uid: string;
 
   public articles: InterfaceArticle[] = [];
